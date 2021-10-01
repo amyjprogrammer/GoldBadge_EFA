@@ -10,6 +10,8 @@ namespace Menu_Console
     {
         static void Main(string[] args)
         {
+            MenuUI ui = new MenuUI();
+            ui.Run();
         }
     }
 }

@@ -50,5 +50,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Menu_Repository\Menu_Repository.csproj">
+      <Project>{40A327A9-EE0B-40C5-B025-2CA8AB59316E}</Project>
+      <Name>Menu_Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

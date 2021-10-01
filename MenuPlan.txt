@@ -27,4 +27,14 @@
 		5. test meal price - SetMealPrice_ShouldReturnCorrectPrice()
 
 3. Menu Console
-	a. 
+	a. Program- runs the app
+		1. add run item so it will work with MenuUi
+	b. Menu UI
+		1. add the Main menu
+			a. option to review all menu items
+			b. add items
+			c. delete items
+		2. wish list
+			a. make sure it shows nothing when the menu items are empty- for review all items and delete
+			b. validate they entered correct info (if number only a number)
+			c. parse the data for the add ingredients portion
