@@ -93,12 +93,12 @@ namespace Menu_Console
                 PrintColorMessage(ConsoleColor.Yellow, "\nPlease enter the description: ");
                 menu.MealDescription = Console.ReadLine();
 
+                List<string> listOfIngredients = new List<string>();
                 bool addIngredients = true;
                 while (addIngredients)
                 {
                     PrintColorMessage(ConsoleColor.Yellow, "\nPlease enter an ingredient for this menu item: ");
                     string ingredient = Console.ReadLine();
-                    List<string> listOfIngredients = new List<string>();
                     listOfIngredients.Add(ingredient);
                     menu.MealIngredients = listOfIngredients;
                     Console.ForegroundColor = ConsoleColor.Yellow;
@@ -124,7 +124,48 @@ namespace Menu_Console
         public void SeeAllMenuItems()
         {
             Console.Clear();
-            DisplayAllMenuItems();
+            Console.WriteLine("A list of all the Menu Items\n" +
+              "******************************************\n");
+            List<Menu> listOfAllMenuItems = _menuRepo.GetAllMenuItems();
+            if (listOfAllMenuItems.Count == 0)
+            {
+                Console.WriteLine("Currently we don't have any Menu Items listed.");
+            }
+            else
+            {
+                Console.WriteLine($"{"Meal Name",-30} {"Meal Number",-15} {"Meal Price",-15} {"Meal Description",-30} ");
+                var index = 1;
+                foreach (Menu menuItemContent in listOfAllMenuItems)
+                {
+                    Console.WriteLine($"{index}. {menuItemContent.MealName,-30} {menuItemContent.MealNumber,-15} {menuItemContent.MealPrice,-15} {menuItemContent.MealDescription,-30}");
+                    index++;
+                }
+                PrintColorMessage(ConsoleColor.Yellow, "\nWould you like to see the Menu Ingredients for one of the Meals? [Y or N]: ");
+                string userAnswer = Console.ReadLine().ToUpper();
+                if (userAnswer == "Y")
+                {
+                    PrintColorMessage(ConsoleColor.Yellow, "\nWhat Meal Number would you like to look at?: ");
+                    int mealNum = MakeSureUserEnteredANum();
+                    Menu menuItem = _menuRepo.GetOneMenuItemByMealNum(mealNum);
+                    if (menuItem == null)
+                    {
+                        PrintColorMessage(ConsoleColor.DarkBlue, "\nWe are not able to find that Meal Number.");
+                        PauseProgram();
+                        return;
+                    }
+                    Console.Clear();
+                    Console.WriteLine($"********************************************\n" +
+                        $"Ingredients for {menuItem.MealName}\n");
+                    for (int i = 0; i < menuItem.MealIngredients.Count; i++)
+                    {
+                        Console.WriteLine($"{index}. {menuItem.MealIngredients[i]}");
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
             PauseProgram();
         }
         public void DeleteMenuItem()
@@ -147,7 +188,7 @@ namespace Menu_Console
                     //Making sure user enters a number
                     int userNumInput = MakeSureUserEnteredANum();
                     Menu existingMenuItems = _menuRepo.GetOneMenuItemByMealNum(userNumInput);
-                    if(existingMenuItems == null)
+                    if (existingMenuItems == null)
                     {
                         PrintColorMessage(ConsoleColor.DarkBlue, "\nWe are not able to find that Meal Number.");
                         PauseProgram();
@@ -156,7 +197,7 @@ namespace Menu_Console
                     PrintColorMessage(ConsoleColor.Red, $"\nAre you sure you want to delete {existingMenuItems.MealName}?\n");
                     PrintColorMessage(ConsoleColor.Yellow, "Please confirm with Yes or No: ");
                     string userAnswer = Console.ReadLine().ToUpper();
-                    if(userAnswer == "YES")
+                    if (userAnswer == "YES")
                     {
                         Console.Clear();
                         _menuRepo.DeleteMenutItem(existingMenuItems);
@@ -230,11 +271,11 @@ namespace Menu_Console
             }
             else
             {
-                Console.WriteLine($"{"Meal Name", -30} {"Meal Number", -15} {"Meal Price", -15} {"Meal Description", -30} ");
+                Console.WriteLine($"{"Meal Name",-30} {"Meal Number",-15} {"Meal Price",-15} {"Meal Description",-30} ");
                 var index = 1;
                 foreach (Menu menuItemContent in listOfAllMenuItems)
                 {
-                    Console.WriteLine($"{index}. {menuItemContent.MealName, -30} {menuItemContent.MealNumber, -15} {menuItemContent.MealPrice, -15} {menuItemContent.MealDescription, -30}");
+                    Console.WriteLine($"{index}. {menuItemContent.MealName,-30} {menuItemContent.MealNumber,-15} {menuItemContent.MealPrice,-15} {menuItemContent.MealDescription,-30}");
                     index++;
                 }
             }
