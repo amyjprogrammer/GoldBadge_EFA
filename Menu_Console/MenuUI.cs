@@ -38,14 +38,14 @@ namespace Menu_Console
                 switch (userInput)
                 {
                     case "1":
-                        // Show all Menu Items;
+                        SeeAllMenuItems();
                         break;
                     case "2":
-                        //Add Menu Items;
+                        AddMenuItem();
                         break;
                     case "3":
-                        //delete menu items;
-                            break;
+                        DeleteMenuItem();
+                        break;
                     case "4":
                         isRunning = false;
                         break;
@@ -55,6 +55,130 @@ namespace Menu_Console
                         break;
                 }
             }
+        }
+        public void AddMenuItem()
+        {
+
+            bool addNewMenuItem = true;
+            while (addNewMenuItem)
+            {
+                Console.Clear();
+
+                //newing up the Menu
+                Menu menu = new Menu();
+                Console.WriteLine("Information for the New Menu Item\n" +
+                        "********************************************\n\n");
+                PrintColorMessage(ConsoleColor.Yellow, "Please enter the new name: ");
+                menu.MealName = Console.ReadLine();
+                PrintColorMessage(ConsoleColor.Yellow, "\nPlease enter the meal number: ");
+
+                //Making sure user enter a unique number
+                bool checkUserGaveWrongNum = true;
+                while (checkUserGaveWrongNum)
+                {
+                    int userInputForNewMenuItem = MakeSureUserEnteredANum();
+                    bool verifyIfUniqueMenuNum = MakeSureGaveUniqueId(userInputForNewMenuItem);
+                    if (verifyIfUniqueMenuNum == true)
+                    {
+                        checkUserGaveWrongNum = false;
+                    }
+                    else
+                    {
+                        PrintColorMessage(ConsoleColor.Blue, "\nThe Menu Item number must be unique. \n" +
+                            "Please enter another number: ");
+                    }
+                    menu.MealNumber = userInputForNewMenuItem;
+                }
+
+                PrintColorMessage(ConsoleColor.Yellow, "\nPlease enter the description: ");
+                menu.MealDescription = Console.ReadLine();
+
+                bool addIngredients = true;
+                while (addIngredients)
+                {
+                    PrintColorMessage(ConsoleColor.Yellow, "\nPlease enter an ingredient for this menu item: ");
+                    string ingredient = Console.ReadLine();
+                    List<string> listOfIngredients = new List<string>();
+                    listOfIngredients.Add(ingredient);
+                    menu.MealIngredients = listOfIngredients;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    addIngredients = CheckIfUserWantsToAddMore("\nWould you like to add more ingredients? [Y or N]: ");
+                    Console.ResetColor();
+                }
+
+                PrintColorMessage(ConsoleColor.Yellow, "\nPlease enter the price: ");
+                double userInputForNewPrice = MakeSureUserEnteredADoubleNum();
+                menu.MealPrice = userInputForNewPrice;
+
+                _menuRepo.AddMealToDirectory(menu);
+                Console.Clear();
+                Console.WriteLine("This Menu Item was added.\n" +
+                    "********************************************\n\n");
+                DisplayOneMenuItem(menu);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                addNewMenuItem = CheckIfUserWantsToAddMore("\nWould you like to add another menu item? [Y or N]: ");
+                Console.ResetColor();
+            }
+            PauseProgram();
+        }
+        public void SeeAllMenuItems()
+        {
+            Console.Clear();
+            DisplayAllMenuItems();
+            PauseProgram();
+        }
+        public void DeleteMenuItem()
+        {
+            bool removeMenuItem = true;
+            while (removeMenuItem)
+            {
+                Console.Clear();
+                DisplayAllMenuItems();
+                //Double check if any items to remove
+                List<Menu> listOfAllMenuItems = _menuRepo.GetAllMenuItems();
+                if (listOfAllMenuItems.Count == 0)
+                {
+                    removeMenuItem = false;
+                }
+                else
+                {
+                    PrintColorMessage(ConsoleColor.Yellow, "\nPlease enter the Meal Number you would like to remove: ");
+
+                    //Making sure user enters a number
+                    int userNumInput = MakeSureUserEnteredANum();
+                    Menu existingMenuItems = _menuRepo.GetOneMenuItemByMealNum(userNumInput);
+                    if(existingMenuItems == null)
+                    {
+                        PrintColorMessage(ConsoleColor.DarkBlue, "\nWe are not able to find that Meal Number.");
+                        PauseProgram();
+                        return;
+                    }
+                    PrintColorMessage(ConsoleColor.Red, $"\nAre you sure you want to delete {existingMenuItems.MealName}?\n");
+                    PrintColorMessage(ConsoleColor.Yellow, "Please confirm with Yes or No: ");
+                    string userAnswer = Console.ReadLine().ToUpper();
+                    if(userAnswer == "YES")
+                    {
+                        Console.Clear();
+                        _menuRepo.DeleteMenutItem(existingMenuItems);
+                        Console.WriteLine("This menu item was removed.\n" +
+                                "*******************************************\n");
+                        DisplayOneMenuItem(existingMenuItems);
+                        PauseProgram();
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine($"*****************************************\n\n" +
+                            $"{existingMenuItems.MealName} was not deleted.");
+                        PauseProgram();
+                        return;
+                    }
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    removeMenuItem = CheckIfUserWantsToAddMore("\nWould you like to remove another Menu Item? [Y or N]: ");
+                    Console.ResetColor();
+                }
+            }
+            PauseProgram();
         }
         static void PrintColorMessage(ConsoleColor color, string message)
         {
@@ -73,9 +197,7 @@ namespace Menu_Console
                 string stringInput = Console.ReadLine();
                 if (!int.TryParse(stringInput, out int uniqueId))
                 {
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.Write("Please enter a number: ");
-                    Console.ResetColor();
+                    PrintColorMessage(ConsoleColor.Cyan, "\nPlease enter a number: ");
                     continue;
                 }
                 else
@@ -108,13 +230,54 @@ namespace Menu_Console
             }
             else
             {
+                Console.WriteLine($"{"Meal Name", -30} {"Meal Number", -15} {"Meal Price", -15} {"Meal Description", -30} ");
                 var index = 1;
                 foreach (Menu menuItemContent in listOfAllMenuItems)
                 {
-                    Console.WriteLine($"{index}. Menu Item: {menuItemContent.MealName}- Meal Number: {menuItemContent.MealNumber}");
+                    Console.WriteLine($"{index}. {menuItemContent.MealName, -30} {menuItemContent.MealNumber, -15} {menuItemContent.MealPrice, -15} {menuItemContent.MealDescription, -30}");
                     index++;
                 }
             }
+        }
+        private bool CheckIfUserWantsToAddMore(string messageToContinue)
+        {
+            Console.Write(messageToContinue);
+            string answer = Console.ReadLine().ToUpper();
+            if (answer == "Y")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private double MakeSureUserEnteredADoubleNum()
+        {
+            bool checkUserGaveWrongNum = true;
+            while (checkUserGaveWrongNum)
+            {
+                string stringInput = Console.ReadLine();
+                if (!double.TryParse(stringInput, out double uniqueId))
+                {
+                    PrintColorMessage(ConsoleColor.Cyan, "\nPlease enter a number: ");
+                    continue;
+                }
+                else
+                {
+                    return Convert.ToDouble(stringInput);
+                }
+            }
+            return 0;
+        }
+        private void DisplayOneMenuItem(Menu menuInfo)
+        {
+            Console.WriteLine($"Menu Name: {menuInfo.MealName} - Menu Number: {menuInfo.MealNumber}");
+        }
+        private void PauseProgram()
+        {
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
         }
     }
 }

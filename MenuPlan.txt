@@ -31,10 +31,13 @@
 		1. add run item so it will work with MenuUi
 	b. Menu UI
 		1. add the Main menu
-			a. option to review all menu items
-			b. add items
-			c. delete items
+			a. option to review all menu items- SeeAllMenuItems()
+			b. add items - AddMenuItem()
+			c. delete items- DeleteMenuItem()
 		2. wish list
-			a. make sure it shows nothing when the menu items are empty- for review all items and delete
-			b. validate they entered correct info (if number only a number)
+			a. make sure it shows nothing when the menu items are empty- for review all items and delete- done
+			b. validate they entered correct info (if number only a number)- done
 			c. parse the data for the add ingredients portion
+			d. test the constructors
+			e. test the ui
+			f. better display for menu items
