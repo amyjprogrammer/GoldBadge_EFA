@@ -1,0 +1,30 @@
+1. Menu Repo Library- must include propeties, constructors and fields
+	a. Menu
+		1. MealNumber - int
+		2. MealName - string
+		3. MealDescription - string
+		4. MealIngredients - list
+		5. MealPrice - double
+
+	b. MenuRepo CRD- no update at this time
+		1. Create - AddMealToDirectory: bool
+		2. Read - GetAllMenuItems: List<Menu>
+			a. GetOneMenuItemByMealNum: Menu 
+		3. Delete - DeleteMenutItem: bool
+
+2. Menu Repo Test - Test to verify the methods
+	a. Tests for MenuRepo
+		1. test create - AddToMealDirectory_ShouldGetCorrectBoolean()
+		2. test read - GetAllMenuIteams_ShouldReturnCorrectCollectList()
+			a. test read - GetOneMenuItemByMealNum_ShouldReturnCorrectContent()
+		3. test delete - DeleteMenuItem_ShouldReturnTrue()
+
+	b. Tests for Menu
+		1. test meal number - SetMealNumber_ShouldGetCorrectNum()
+		2. test meal name - SetMealName_ShouldSetCorrectString()
+		3. test meal description - SetMealDescription_ShouldSetCorrectString()
+		4. test meal ingredients - SetMealIngredients_ShouldReturnCorrectList()
+		5. test meal price - SetMealPrice_ShouldReturnCorrectPrice()
+
+3. Menu Console
+	a. 
