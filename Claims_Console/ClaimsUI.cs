@@ -78,13 +78,13 @@ namespace Claims_Console
                 switch (userInput)
                 {
                     case "1":
-                        
+
                         break;
                     case "2":
-                        
+
                         break;
                     case "3":
-                        
+
                         break;
                     case "4":
                         isAgentRunning = false;
@@ -127,19 +127,19 @@ namespace Claims_Console
                 switch (userInput)
                 {
                     case "1":
-                        
+
                         break;
                     case "2":
-                        
+
                         break;
                     case "3":
-                        
+
                         break;
                     case "4":
-                        
+
                         break;
                     case "5":
-                        
+
                         break;
                     case "6":
                         isManagerRunning = false;
@@ -153,6 +153,62 @@ namespace Claims_Console
                         Console.ResetColor();
                         break;
                 }
+            }
+
+        }
+        private void CreateNewClaim()
+        {
+            bool createNewClaim = true;
+            while (createNewClaim)
+            {
+                Console.Clear();
+
+                //newing up a Claim
+                Claims newClaim = new Claims();
+                Console.WriteLine("Information for the New Claim\n" +
+                    "********************************************\n\n");
+                PrintColorMessage(ConsoleColor.Yellow, "Enter the claim id: ");
+
+                //while loop to make sure the claim id is unique
+                bool checkUserDidNotGiveUniqueId = true;
+                while (checkUserDidNotGiveUniqueId)
+                {
+                    int userInput = MakeSureUserEnteredANum();
+                    bool uniqueClaimId = MakeSureGaveUniqueId(userInput);
+                    if (uniqueClaimId == true)
+                    {
+                        checkUserDidNotGiveUniqueId = false;
+                    }
+                    else
+                    {
+                        PrintColorMessage(ConsoleColor.Blue, "\nThe claim id must be unique. \n" +
+                            "Please enter another number: ");
+                    }
+                    newClaim.ClaimID = userInput;
+                }
+
+                PrintColorMessage(ConsoleColor.Yellow, "\nEnter the claim type number: 1. Car, 2. Home, 3. Theft]: ");
+                bool checkUserGaveCorrectType = true;
+                while (checkUserGaveCorrectType)
+                {
+                    int userInputClaimType = MakeSureUserEnteredANum();
+                    if (userInputClaimType == 1 || userInputClaimType == 2 || userInputClaimType == 3)
+                    {
+                        checkUserGaveCorrectType = false;
+                    }
+                    else
+                    {
+                        PrintColorMessage(ConsoleColor.Blue, "\nThe claim type must be either 1 for Car,2 for Home or 3 for Theft. \n" +
+                            "Please enter the claim type number again: ");
+                    }
+                    newClaim.TypeOfClaim = (ClaimType)userInputClaimType;
+                }
+                PrintColorMessage(ConsoleColor.Yellow, "\nEnter a claim description: ");
+                newClaim.Description = Console.ReadLine();
+                PrintColorMessage(ConsoleColor.Yellow, "\nAmount of Damage: ");
+                newClaim.ClaimAmount = MakeSureUserEnteredADoubleNum();
+                PrintColorMessage(ConsoleColor.Yellow, "\nDate of Accident: ");
+
             }
 
         }
