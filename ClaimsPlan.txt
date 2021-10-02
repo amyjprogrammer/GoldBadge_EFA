@@ -1,0 +1,28 @@
+1. Claims_Repository - Library
+	a. Claims
+		1. ClaimID - int
+		2. ClaimType - Enum { Car, Home, Theft}
+		3. ClaimDescription - string
+		4. ClaimAmount - double
+		5. DateOfIncident - DateTime
+		6. DateOfClaim - DateTime
+		7. IsValid - bool (checked by the date of incident to date of claim)
+	b. ClaimsRepo
+		1. Create - AddNewClaim()- bool
+		2. Read - GetAllClaims() Queue of Claims
+		3. maybe Update - UpdateClaim()- bool
+		4. delete - DeleteClaim()- only manager would have access 
+
+2. Claims_Repository_Tests- Tests
+	a. ClaimsRepo_Tests
+		1. AddNewClaim_ShouldReturnCorrectBoolean()- add method
+		2. GetAllClaims_ShouldRetunrCorrectCollectList - read method
+		3. UpdateClaim_ShouldReturnTrue() - update method
+		4. DeleteClaim_ShouldReturnCorrectBoolean()- delete method
+	b. Wish List- do the Claims and UI
+
+3. Claims_Console- Console
+	a. Program
+		1. runs the program
+	b. ClaimsUI
+		1. add the main menu
