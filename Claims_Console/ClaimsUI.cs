@@ -84,7 +84,7 @@ namespace Claims_Console
 
                         break;
                     case "3":
-
+                        CreateNewClaim();
                         break;
                     case "4":
                         isAgentRunning = false;
@@ -181,13 +181,13 @@ namespace Claims_Console
                     }
                     else
                     {
-                        PrintColorMessage(ConsoleColor.Blue, "\nThe claim id must be unique. \n" +
+                        PrintColorMessage(ConsoleColor.Blue, "The claim id must be unique. \n" +
                             "Please enter another number: ");
                     }
                     newClaim.ClaimID = userInput;
                 }
 
-                PrintColorMessage(ConsoleColor.Yellow, "\nEnter the claim type number: 1. Car, 2. Home, 3. Theft]: ");
+                PrintColorMessage(ConsoleColor.Yellow, "\nEnter the claim type number: 1. Car, 2. Home, 3. Theft: ");
                 bool checkUserGaveCorrectType = true;
                 while (checkUserGaveCorrectType)
                 {
@@ -198,18 +198,42 @@ namespace Claims_Console
                     }
                     else
                     {
-                        PrintColorMessage(ConsoleColor.Blue, "\nThe claim type must be either 1 for Car,2 for Home or 3 for Theft. \n" +
+                        PrintColorMessage(ConsoleColor.Red, "The claim type must be either 1 for Car,2 for Home or 3 for Theft. \n" +
                             "Please enter the claim type number again: ");
                     }
                     newClaim.TypeOfClaim = (ClaimType)userInputClaimType;
                 }
                 PrintColorMessage(ConsoleColor.Yellow, "\nEnter a claim description: ");
                 newClaim.Description = Console.ReadLine();
+
                 PrintColorMessage(ConsoleColor.Yellow, "\nAmount of Damage: ");
                 newClaim.ClaimAmount = MakeSureUserEnteredADoubleNum();
-                PrintColorMessage(ConsoleColor.Yellow, "\nDate of Accident: ");
 
+                Console.WriteLine("\nPlease enter the date like 5/12/21.");
+                PrintColorMessage(ConsoleColor.Yellow, "Date of Accident: ");
+                //making sure user gave a date
+                string userInputForAccident = CheckUserInputForDateTime();
+                newClaim.DateOfIncident = DateTime.Parse(userInputForAccident);
+
+                Console.WriteLine("\nPlease enter the date like 5/12/21.");
+                PrintColorMessage(ConsoleColor.Yellow, "Date of Claim: ");
+                string userInputForClaim = CheckUserInputForDateTime();
+                newClaim.DateOfClaim = DateTime.Parse(userInputForClaim);
+
+                //creating the repo
+                _claimsRepo.AddNewClaimToDirectory(newClaim);
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                createNewClaim = CheckIfUserWantsToAddMore("\nWould you like to add another claim? [Y or N]: ");
+                Console.ResetColor();
             }
+            PauseProgram();
+        }
+        private void SeeAllClaims()
+        {
+            Console.Clear();
+            //make sure to see if the queue is empty first, will cause error if called and not checked
+            //also give message if the queue is empty
 
         }
         static void PrintColorMessage(ConsoleColor color, string message)
@@ -229,7 +253,7 @@ namespace Claims_Console
                 string stringInput = Console.ReadLine();
                 if (!int.TryParse(stringInput, out int uniqueId))
                 {
-                    PrintColorMessage(ConsoleColor.Cyan, "\nPlease enter a number: ");
+                    PrintColorMessage(ConsoleColor.Cyan, "Please enter a number: ");
                     continue;
                 }
                 else
@@ -272,7 +296,7 @@ namespace Claims_Console
                 string stringInput = Console.ReadLine();
                 if (!double.TryParse(stringInput, out double uniqueId))
                 {
-                    PrintColorMessage(ConsoleColor.Cyan, "\nPlease enter a number: ");
+                    PrintColorMessage(ConsoleColor.Cyan, "Please enter a number: ");
                     continue;
                 }
                 else
@@ -286,6 +310,25 @@ namespace Claims_Console
         {
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
+        }
+        private string CheckUserInputForDateTime()
+        {
+            bool checkUserInputForWrongDate = true;
+            while (checkUserInputForWrongDate)
+            {
+                string userInputForAccident = Console.ReadLine();
+                DateTime dt;
+                var isValidDate = DateTime.TryParse(userInputForAccident, out dt);
+                if (isValidDate)
+                {
+                    return userInputForAccident;
+                }
+                else
+                {
+                    PrintColorMessage(ConsoleColor.Red, "Incorrect Information Given. Please enter the date again: ");
+                }
+            }
+            return "0";
         }
 
     }
