@@ -8,17 +8,21 @@
 		6. DateOfClaim - DateTime
 		7. IsValid - bool (checked by the date of incident to date of claim)
 	b. ClaimsRepo
-		1. Create - AddNewClaim()- bool
-		2. Read - GetAllClaims() Queue of Claims
-		3. maybe Update - UpdateClaim()- bool
-		4. delete - DeleteClaim()- only manager would have access 
+		1. Create - AddNewClaimToDirectory()- bool
+		2. Read - GetAllClaimsFromDirectory() Queue of Claims
+			a. GetOneClaimFromDirectory()- will be for manager
+		3. maybe Update - UpdateClaimInDirectory()- bool- probably only manager
+		4. delete - DeleteClaimFromDirectory()- only manager would have access 
+
+	c. Might need a separate repo for Managers using list instead
 
 2. Claims_Repository_Tests- Tests
 	a. ClaimsRepo_Tests
-		1. AddNewClaim_ShouldReturnCorrectBoolean()- add method
-		2. GetAllClaims_ShouldRetunrCorrectCollectList - read method
-		3. UpdateClaim_ShouldReturnTrue() - update method
-		4. DeleteClaim_ShouldReturnCorrectBoolean()- delete method
+		1. AddNewClaimToDirectory_ShouldReturnCorrectBoolean()- add method
+		2. GetAllClaimsFromDirectory_ShouldRetunrCorrectCollectList - read method
+			a. GetOneClaimFromDirectory_ShouldReturnCorrectClaim()- read (for the manager)
+		3. UpdateClaimInDirectory_ShouldReturnTrue() - update method
+		4. DeleteClaimFromDirectory_ShouldReturnCorrectBoolean()- delete method
 	b. Wish List- do the Claims and UI
 
 3. Claims_Console- Console
@@ -26,3 +30,11 @@
 		1. runs the program
 	b. ClaimsUI
 		1. add the main menu
+
+
+Notes on Queues- always check the count before calling Dequeue()- will use this for removing the first
+	a. will use Peek()- to look at the first one without removing from queue (also check count or will throw issue)
+check out - https://www.tutorialsteacher.com/csharp/csharp-queue
+
+Wish List
+	a. refactor the tests
