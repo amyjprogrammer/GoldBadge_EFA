@@ -29,7 +29,7 @@ namespace Claims_Console
                         "2. Show Claims Manager Menu\n" +
                         "3. Exit"
                     );
-                PrintColorMessage(ConsoleColor.Green, "\nPlease enter the number of your selection: ");
+                PrintColorMessage(ConsoleColor.Yellow, "\nPlease enter the number of your selection: ");
                 string userInput = Console.ReadLine();
 
                 switch (userInput)
@@ -70,7 +70,7 @@ namespace Claims_Console
                         "3. Enter a new claim\n" +
                         "4. Main Menu\n"
                     );
-                Console.ForegroundColor = ConsoleColor.Green;
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("Choose a menu item: ");
                 Console.ResetColor();
                 string userInput = Console.ReadLine();
@@ -118,7 +118,7 @@ namespace Claims_Console
                         "4. Enter a New Claim\n" +
                         "5. Main Menu\n"
                     );
-                Console.ForegroundColor = ConsoleColor.Green;
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("\nEnter the number of your selection: ");
                 Console.ResetColor();
                 string userInput = Console.ReadLine();
@@ -294,11 +294,11 @@ namespace Claims_Console
 
                     //Make sure they gave a uniqe number
                     bool checkUserAnswer = true;
-                    if (checkUserAnswer)
+                    while (checkUserAnswer)
                     {
                         int userInputNewClaimID = MakeSureUserEnteredANum();
                         bool verifyifUniqueID = MakeSureGaveUniqueId(userInputNewClaimID);
-                        if (verifyifUniqueID)
+                        if (verifyifUniqueID == true)
                         {
                             checkUserAnswer = false;
                         }
