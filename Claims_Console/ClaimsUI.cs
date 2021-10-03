@@ -112,12 +112,11 @@ namespace Claims_Console
                     (
                         "Claims Manager Menu\n" +
                         "**************************************\n\n" +
-                        "1. Show all Developer Teams with Developers\n" +
-                        "2. Add new Developer Team and Assign Multiple Developers\n" +
-                        "3. Update Developer on Team\n" +
-                        "4. Edit Developer Team\n" +
-                        "5. Delete Developer Team\n" +
-                        "6. Main Menu\n"
+                        "1. See All Claims\n" +
+                        "2. Update a Claim by Claim Number\n" +
+                        "3. Remove Claim by Claim Number\n" +
+                        "4. Enter a New Claim\n" +
+                        "5. Main Menu\n"
                     );
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("\nEnter the number of your selection: ");
@@ -127,21 +126,18 @@ namespace Claims_Console
                 switch (userInput)
                 {
                     case "1":
-
+                        SeeAllClaims();
                         break;
                     case "2":
-
+                        UpdateClaimUsingClaimID();
                         break;
                     case "3":
 
                         break;
                     case "4":
-
+                        CreateNewClaim();
                         break;
                     case "5":
-
-                        break;
-                    case "6":
                         isManagerRunning = false;
                         RunMenu(false);
                         break;
@@ -241,7 +237,7 @@ namespace Claims_Console
         {
             Console.Clear();
             Queue<Claims> allClaims = _claimsRepo.GetAllClaimsFromDirectory();
-            if(allClaims.Count == 0)
+            if (allClaims.Count == 0)
             {
                 Console.WriteLine("Currently we don't have any claims listed.");
             }
@@ -257,13 +253,117 @@ namespace Claims_Console
 
                 PrintColorMessage(ConsoleColor.Yellow, "Do you want to deal with this claim now (y/n): ");
                 string userAnswer = Console.ReadLine().ToLower();
-                if(userAnswer == "y")
+                if (userAnswer == "y")
                 {
                     allClaims.Dequeue();
                 }
                 else
                 {
                     return;
+                }
+            }
+            PauseProgram();
+        }
+        private void UpdateClaimUsingClaimID()
+        {
+            bool updateClaimIsTrue = true;
+            while (updateClaimIsTrue)
+            {
+                Console.Clear();
+                DisplayAllClaimsFromQueue();
+
+                Queue<Claims> listOfAllClaims = _claimsRepo.GetAllClaimsFromDirectory();
+                if (listOfAllClaims.Count == 0)
+                {
+                    updateClaimIsTrue = false;
+                }
+                else
+                {
+                    PrintColorMessage(ConsoleColor.Yellow, "\nEnter the Claim ID you would like to update: ");
+                    var userNumChecked = MakeSureUserEnteredANum();
+                    var existingClaimInfo = _claimsRepo.GetOneClaimFromDirectory(userNumChecked);
+                    if (existingClaimInfo == null)
+                    {
+                        Console.WriteLine("\nWe are not able to find that Claim ID.");
+                        return;
+                    }
+                    Claims updateClaim = new Claims();
+
+                    Console.WriteLine($"\nCurrent Claim ID: {existingClaimInfo.ClaimID}");
+                    PrintColorMessage(ConsoleColor.Yellow,"Please enter the new Claim ID: ");
+
+                    //Make sure they gave a uniqe number
+                    bool checkUserAnswer = true;
+                    if (checkUserAnswer)
+                    {
+                        int userInputNewClaimID = MakeSureUserEnteredANum();
+                        bool verifyifUniqueID = MakeSureGaveUniqueId(userInputNewClaimID);
+                        if (verifyifUniqueID)
+                        {
+                            checkUserAnswer = false;
+                        }
+                        else
+                        {
+                            PrintColorMessage(ConsoleColor.Blue, "The Claim ID must be unique.\n" +
+                                "Please enter another number: ");
+                        }
+                        updateClaim.ClaimID = userInputNewClaimID;
+                    }
+
+                    Console.WriteLine($"\nCurrent Claim Type: {existingClaimInfo.TypeOfClaim}");
+                    PrintColorMessage(ConsoleColor.Yellow, "Please enter the new Claim Type. 1. Car, 2. Home, 3. Theft: ");
+                    bool checkUserGaveCorrectType = true;
+                    while (checkUserGaveCorrectType)
+                    {
+                        int userInputClaimType = MakeSureUserEnteredANum();
+                        if (userInputClaimType == 1 || userInputClaimType == 2 || userInputClaimType == 3)
+                        {
+                            checkUserGaveCorrectType = false;
+                        }
+                        else
+                        {
+                            PrintColorMessage(ConsoleColor.Red, "The claim type must be either 1 for Car,2 for Home or 3 for Theft. \n" +
+                                "Please enter the claim type number again: ");
+                        }
+                        updateClaim.TypeOfClaim = (ClaimType)userInputClaimType;
+                    }
+
+                    Console.WriteLine($"\nCurrent Claim Description: {existingClaimInfo.Description}");
+                    PrintColorMessage(ConsoleColor.Yellow, "Please enter the new description: ");
+                    updateClaim.Description = Console.ReadLine();
+
+                    Console.WriteLine($"\nCurrent Claim Amount: {existingClaimInfo.ClaimAmount}");
+                    PrintColorMessage(ConsoleColor.Yellow, "Please enter the new Claim Amount: ");
+                    double userInputAmount = MakeSureUserEnteredADoubleNum();
+                    updateClaim.ClaimAmount = userInputAmount;
+
+                    Console.WriteLine($"\nCurrent Date of Accident: {existingClaimInfo.DateOfIncident.ToShortDateString()}");
+                    PrintColorMessage(ConsoleColor.Yellow, "Please enter the new Date of Accident: ");
+                    string checkUserDateForAccident = CheckUserInputForDateTime();
+                    updateClaim.DateOfIncident = DateTime.Parse(checkUserDateForAccident);
+
+                    Console.WriteLine($"\nCurrent Date of Claim: {existingClaimInfo.DateOfClaim.ToShortDateString()}");
+                    PrintColorMessage(ConsoleColor.Yellow, "Please enter the new Date of Claim: ");
+                    string checkUserDateForClaim = CheckUserInputForDateTime();
+                    updateClaim.DateOfClaim = DateTime.Parse(checkUserDateForClaim);
+
+                    if(_claimsRepo.UpdateClaimInDirectory(existingClaimInfo, updateClaim))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Update successful\n" +
+                            "*******************************************\n");
+                        Console.WriteLine($"{"ClaimID",-10}{"Type",-15}{"Description",-30}{"Amount",-15}{"Date of Accident",-20}{"Date of Claim",-20}{"IsValid",-15}");
+                        Console.WriteLine($"{"_______",-10}{"____",-15}{"___________",-30 }{"______",-15}{"________________",-20}{"_____________",-20}{"_______",-15}");
+                        Console.WriteLine($"{updateClaim.ClaimID,-10}{updateClaim.TypeOfClaim,-15}{updateClaim.Description,-30}${updateClaim.ClaimAmount,-15}{updateClaim.DateOfIncident.ToShortDateString(),-20}{updateClaim.DateOfClaim.ToShortDateString(),-20}{updateClaim.IsValid,-15}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Update failed.");
+                    }
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    updateClaimIsTrue = CheckIfUserWantsToAddMore("\nWould you like to update another claim? [Y or N]: ");
+                    Console.ResetColor();
                 }
             }
             PauseProgram();
@@ -357,7 +457,7 @@ namespace Claims_Console
                 }
                 else
                 {
-                    PrintColorMessage(ConsoleColor.Red, "Incorrect Information Given. Please enter the date again: ");
+                    PrintColorMessage(ConsoleColor.Red, "Incorrect Information Given. Enter the date like 5/21/21.  \nPlease enter the date again: ");
                 }
             }
             return "0";
@@ -367,14 +467,14 @@ namespace Claims_Console
             Console.WriteLine("A list of all Claims\n" +
                "******************************************\n");
             Queue<Claims> queueofAllClaims = _claimsRepo.GetAllClaimsFromDirectory();
-            if( queueofAllClaims.Count == 0)
+            if (queueofAllClaims.Count == 0)
             {
                 Console.WriteLine("Currently we don't have any claims listed.");
             }
             else
             {
-                Console.WriteLine($"{"ClaimID", -10}{"Type", -15}{"Description", -30}{"Amount", -15}{"Date of Accident", -20}{"Date of Claim", -20}{"IsValid", -15}");
-                Console.WriteLine($"{"_______",-10}{"____", -15}{"___________",-30 }{"______", -15}{"________________",-20}{"_____________",-20}{"_______",-15}");
+                Console.WriteLine($"{"ClaimID",-10}{"Type",-15}{"Description",-30}{"Amount",-15}{"Date of Accident",-20}{"Date of Claim",-20}{"IsValid",-15}");
+                Console.WriteLine($"{"_______",-10}{"____",-15}{"___________",-30 }{"______",-15}{"________________",-20}{"_____________",-20}{"_______",-15}");
                 foreach (var claimsContent in queueofAllClaims)
                 {
                     Console.WriteLine($"{claimsContent.ClaimID,-10}{claimsContent.TypeOfClaim,-15}{claimsContent.Description,-30}${claimsContent.ClaimAmount,-15}{claimsContent.DateOfIncident.ToShortDateString(),-20}{claimsContent.DateOfClaim.ToShortDateString(),-20}{claimsContent.IsValid,-15}");
