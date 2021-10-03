@@ -36,5 +36,8 @@ Notes on Queues- always check the count before calling Dequeue()- will use this 
 	a. will use Peek()- to look at the first one without removing from queue (also check count or will throw issue)
 check out - https://www.tutorialsteacher.com/csharp/csharp-queue
 
+Notes on DateTime- https://www.c-sharpcorner.com/UploadFile/mahesh/working-with-datetime-using-C-Sharp/
+https://www.tutorialsteacher.com/csharp/csharp-datetime
+
 Wish List
 	a. refactor the tests

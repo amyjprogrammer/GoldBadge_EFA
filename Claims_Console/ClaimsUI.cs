@@ -81,7 +81,7 @@ namespace Claims_Console
                         SeeAllClaims();
                         break;
                     case "2":
-
+                        TakeCareOfNextClaim();
                         break;
                     case "3":
                         CreateNewClaim();
@@ -235,6 +235,37 @@ namespace Claims_Console
             //make sure to see if the queue is empty first, will cause error if called and not checked
             //also give message if the queue is empty
             DisplayAllClaimsFromQueue();
+            PauseProgram();
+        }
+        private void TakeCareOfNextClaim()
+        {
+            Console.Clear();
+            Queue<Claims> allClaims = _claimsRepo.GetAllClaimsFromDirectory();
+            if(allClaims.Count == 0)
+            {
+                Console.WriteLine("Currently we don't have any claims listed.");
+            }
+            else
+            {
+                //show the next claim using Peek
+                Console.WriteLine("The next Claim\n" +
+              "******************************************\n");
+                Claims claimsContent = allClaims.Peek();
+                Console.WriteLine($"{"ClaimID",-10}{"Type",-15}{"Description",-30}{"Amount",-15}{"Date of Accident",-20}{"Date of Claim",-20}{"IsValid",-15}");
+                Console.WriteLine($"{"_______",-10}{"____",-15}{"___________",-30 }{"______",-15}{"________________",-20}{"_____________",-20}{"_______",-15}");
+                Console.WriteLine($"{claimsContent.ClaimID,-10}{claimsContent.TypeOfClaim,-15}{claimsContent.Description,-30}${claimsContent.ClaimAmount,-15}{claimsContent.DateOfIncident.ToShortDateString(),-20}{claimsContent.DateOfClaim.ToShortDateString(),-20}{claimsContent.IsValid,-15}");
+
+                PrintColorMessage(ConsoleColor.Yellow, "Do you want to deal with this claim now (y/n): ");
+                string userAnswer = Console.ReadLine().ToLower();
+                if(userAnswer == "y")
+                {
+                    allClaims.Dequeue();
+                }
+                else
+                {
+                    return;
+                }
+            }
             PauseProgram();
         }
         static void PrintColorMessage(ConsoleColor color, string message)
