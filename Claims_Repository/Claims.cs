@@ -29,8 +29,6 @@ namespace Claims_Repository
         {
             get
             {
-                DateTime DateOfClaim = new DateTime();
-                DateTime DateOfIncident = new DateTime();
                 TimeSpan value = DateOfClaim.Subtract(DateOfIncident);
                 if(value.TotalDays <= 30)
                 {

@@ -78,7 +78,7 @@ namespace Claims_Console
                 switch (userInput)
                 {
                     case "1":
-
+                        SeeAllClaims();
                         break;
                     case "2":
 
@@ -234,7 +234,8 @@ namespace Claims_Console
             Console.Clear();
             //make sure to see if the queue is empty first, will cause error if called and not checked
             //also give message if the queue is empty
-
+            DisplayAllClaimsFromQueue();
+            PauseProgram();
         }
         static void PrintColorMessage(ConsoleColor color, string message)
         {
@@ -329,6 +330,25 @@ namespace Claims_Console
                 }
             }
             return "0";
+        }
+        private void DisplayAllClaimsFromQueue()
+        {
+            Console.WriteLine("A list of all Claims\n" +
+               "******************************************\n");
+            Queue<Claims> queueofAllClaims = _claimsRepo.GetAllClaimsFromDirectory();
+            if( queueofAllClaims.Count == 0)
+            {
+                Console.WriteLine("Currently we don't have any claims listed.");
+            }
+            else
+            {
+                Console.WriteLine($"{"ClaimID", -10}{"Type", -15}{"Description", -30}{"Amount", -15}{"Date of Accident", -20}{"Date of Claim", -20}{"IsValid", -15}");
+                Console.WriteLine($"{"_______",-10}{"____", -15}{"___________",-30 }{"______", -15}{"________________",-20}{"_____________",-20}{"_______",-15}");
+                foreach (var claimsContent in queueofAllClaims)
+                {
+                    Console.WriteLine($"{claimsContent.ClaimID,-10}{claimsContent.TypeOfClaim,-15}{claimsContent.Description,-30}${claimsContent.ClaimAmount,-15}{claimsContent.DateOfIncident.ToShortDateString(),-20}{claimsContent.DateOfClaim.ToShortDateString(),-20}{claimsContent.IsValid,-15}");
+                }
+            }
         }
 
     }
