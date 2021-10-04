@@ -134,10 +134,10 @@ namespace Claims_Console
                     /*case "3":
                         DeleteSingleClaim();
                         break;*/
-                    case "4":
+                    case "3":
                         CreateNewClaim();
                         break;
-                    case "5":
+                    case "4":
                         isManagerRunning = false;
                         RunMenu(false);
                         break;
