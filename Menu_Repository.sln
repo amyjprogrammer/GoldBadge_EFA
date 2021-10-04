@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PlanningFolder", "PlanningF
 		ClaimsPlan.txt = ClaimsPlan.txt
 		InsurancePlan.txt = InsurancePlan.txt
 		MenuPlan.txt = MenuPlan.txt
+		OutingPlanning.txt = OutingPlanning.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Claims_Repository", "Claims_Repository\Claims_Repository.csproj", "{67AA9EF9-4555-4FDB-ABF8-555AAB0E9AB2}"
@@ -27,6 +28,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Badge_Repository_Tests", "Badge_Repository_Tests\Badge_Repository_Tests.csproj", "{EAD3C622-311A-48A2-9084-E6550F801E12}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Badge_Console", "Badge_Console\Badge_Console.csproj", "{438A5D98-B879-4C67-9740-B3A81D202843}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outings_Repository", "Outings_Repository\Outings_Repository.csproj", "{AF77FDA2-F295-40DC-BE1B-F3065651E488}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outings_Repository_Tests", "Outings_Repository_Tests\Outings_Repository_Tests.csproj", "{C85C5A8E-92C3-436D-B816-C74F77F0C56A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Outings_Console", "Outings_Console\Outings_Console.csproj", "{EC2C6BC6-FCC1-43F0-811A-8BE338448E09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,6 +77,18 @@ Global
 		{438A5D98-B879-4C67-9740-B3A81D202843}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{438A5D98-B879-4C67-9740-B3A81D202843}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{438A5D98-B879-4C67-9740-B3A81D202843}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF77FDA2-F295-40DC-BE1B-F3065651E488}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF77FDA2-F295-40DC-BE1B-F3065651E488}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF77FDA2-F295-40DC-BE1B-F3065651E488}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF77FDA2-F295-40DC-BE1B-F3065651E488}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C85C5A8E-92C3-436D-B816-C74F77F0C56A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C85C5A8E-92C3-436D-B816-C74F77F0C56A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C85C5A8E-92C3-436D-B816-C74F77F0C56A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C85C5A8E-92C3-436D-B816-C74F77F0C56A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC2C6BC6-FCC1-43F0-811A-8BE338448E09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC2C6BC6-FCC1-43F0-811A-8BE338448E09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC2C6BC6-FCC1-43F0-811A-8BE338448E09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC2C6BC6-FCC1-43F0-811A-8BE338448E09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

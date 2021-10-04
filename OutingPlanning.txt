@@ -1,0 +1,37 @@
+Komodo Outings
+
+1. Outings_Repository - Library
+	a. Outings	
+		1. Event Type - Enum { Golf, Bowling, Amusement Park, Concert }
+		2. NumPeopleAttended - int
+		3. DateOfEvent - DateTime
+		4. CostOfEvent - double
+		5. CostPerPerson- found by CostOfEvent/NumPeopleAttended
+
+	b. Outings_Repo
+		1. AddOutingToDirectory()
+		2. UpdateOutingInDirectory()
+		3. GetAllOutings()
+		4. GetOneOutingType()- by Type
+		5. TotalCostForOutings()
+		
+2. Outings_Repository_Tests - Tests
+	a. Outings_Repo_Tests
+		1. AddOutingToDirectory_ShouldGetCorrectBoolean()
+		2. UpdateOutingInDirectory_ShouldReturnTrue()
+		3. GetAllOutings_ShouldReturnCorrectList()
+		4. GetOneOutingType_ShouldReturnCorrectContent()
+		5. TotalCostForOutings_ShouldReturnCorrectAmount()
+
+	b. Outings_Tests
+		1. SetEventType_ShouldSetCorrectEnum()
+		2. SetNumPeopleAttended_ShouldSetCorrectInt()
+		3. SetDateOfEvent_ShouldSetCorrectDate()
+		4. SetCostOfEvent_ShouldSetCorrectCostForEvent()
+			a. add in test for cost per person
+
+3. Outings_Console
+	a. Program CS
+
+	b. OutingsUI
+
