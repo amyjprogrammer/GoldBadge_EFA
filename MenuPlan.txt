@@ -37,7 +37,7 @@
 		2. wish list
 			a. make sure it shows nothing when the menu items are empty- for review all items and delete- done
 			b. validate they entered correct info (if number only a number)- done
-			c. parse the data for the add ingredients portion
+			c. parse the data for the add ingredients portion- done
 			d. test the constructors
 			e. test the ui
-			f. better display for menu items
+			f. better display for menu items- done

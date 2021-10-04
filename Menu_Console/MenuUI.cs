@@ -84,7 +84,7 @@ namespace Menu_Console
                     }
                     else
                     {
-                        PrintColorMessage(ConsoleColor.Blue, "\nThe Menu Item number must be unique. \n" +
+                        PrintColorMessage(ConsoleColor.Blue, "The Menu Item number must be unique. \n" +
                             "Please enter another number: ");
                     }
                     menu.MealNumber = userInputForNewMenuItem;
@@ -94,7 +94,8 @@ namespace Menu_Console
                 menu.MealDescription = Console.ReadLine();
 
                 List<string> listOfIngredients = new List<string>();
-                bool addIngredients = true;
+                //added the option to add all the Ingredients at once
+                /*bool addIngredients = true;
                 while (addIngredients)
                 {
                     PrintColorMessage(ConsoleColor.Yellow, "\nPlease enter an ingredient for this menu item: ");
@@ -104,7 +105,13 @@ namespace Menu_Console
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     addIngredients = CheckIfUserWantsToAddMore("\nWould you like to add more ingredients? [Y or N]: ");
                     Console.ResetColor();
-                }
+                }*/
+
+                Console.WriteLine("\nPlease enter your ingredients by adding a coma like burger,fries,soda.");
+                PrintColorMessage(ConsoleColor.Yellow, "Ingredient list: ");
+                string splitList = Console.ReadLine();
+                listOfIngredients = splitList.Split(',').ToList();
+                menu.MealIngredients = listOfIngredients;
 
                 PrintColorMessage(ConsoleColor.Yellow, "\nPlease enter the price: ");
                 double userInputForNewPrice = MakeSureUserEnteredADoubleNum();
@@ -156,9 +163,11 @@ namespace Menu_Console
                     Console.Clear();
                     Console.WriteLine($"********************************************\n" +
                         $"Ingredients for {menuItem.MealName}\n");
+                    var indexNum = 1;
                     for (int i = 0; i < menuItem.MealIngredients.Count; i++)
                     {
-                        Console.WriteLine($"{index}. {menuItem.MealIngredients[i]}");
+                        Console.WriteLine($"{indexNum}. {menuItem.MealIngredients[i]}");
+                        indexNum++;
                     }
                 }
                 else
@@ -238,7 +247,7 @@ namespace Menu_Console
                 string stringInput = Console.ReadLine();
                 if (!int.TryParse(stringInput, out int uniqueId))
                 {
-                    PrintColorMessage(ConsoleColor.Cyan, "\nPlease enter a number: ");
+                    PrintColorMessage(ConsoleColor.Cyan, "Please enter a number: ");
                     continue;
                 }
                 else
