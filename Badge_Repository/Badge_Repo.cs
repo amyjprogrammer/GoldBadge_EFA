@@ -57,5 +57,14 @@ namespace Badge_Repository
             bool result = badgeInfo.DoorName.Remove(doorName);
             return result;
         }
+        public bool AddDoorToBadge(int badgeID, string doorName)
+        {
+            Badge badgeInfo = ReadOneBadgeByID(badgeID);
+            int startingCount = badgeInfo.DoorName.Count;
+            badgeInfo.DoorName.Add(doorName);
+            bool wasAdded = (badgeInfo.DoorName.Count > startingCount) ? true : false;
+            return wasAdded;
+
+        }
     }
 }

@@ -10,6 +10,7 @@ Hint- use a dictionary
 		3. ReadOneBadgeByID()
 		4. UpdateBadgeByID()
 		5. DeleteDoorsFromBadge()
+		6. AddDoorToBadge()- added later 
 
 2. Badge_Repository_Tests - Tests
 	a. Badge_Repo_Tests
@@ -18,6 +19,7 @@ Hint- use a dictionary
 		3. ReadOneBadgeByID_ShouldReturnCorrectContent()
 		4. UpdateBadgeByID_ShouldReturnCorrectBoolean()
 		5. DeleteDoorsFromBadge_ShouldReturnTrue()
+		6. AddDoorToBadge_ShouldReturnTrue()- added later
 
 3. Badge_Console - Console App
 	Layout for Menu:
