@@ -55,5 +55,11 @@ namespace Claims_Repository
                 return false;
             }
         }
+        /*public bool DeleteClaimFromDirectory(Claims existingClaim)
+        {
+            bool result = _claimsDirectory.ToList().Remove(existingClaim);
+            return result;
+        }*/
+
     }
 }

@@ -12,9 +12,9 @@ namespace Menu_Repository_Tests
         public void AddToMealDirectory_ShouldGetCorrectBoolean()
         {
             Menu menuContent = new Menu();
-            MenuRepo menuRepo = new MenuRepo();
+            MenuRepo _menuRepo = new MenuRepo();
 
-            bool success = menuRepo.AddMealToDirectory(menuContent);
+            bool success = _menuRepo.AddMealToDirectory(menuContent);
 
             Assert.IsTrue(success);
         }
@@ -26,11 +26,11 @@ namespace Menu_Repository_Tests
             ingredients.Add("Hamburger");
 
             Menu happyMeal = new Menu(1, "Happy Meal", "Yummy", ingredients, 4.99);
-            MenuRepo menuRepo = new MenuRepo();
+            MenuRepo _menuRepo = new MenuRepo();
 
-            menuRepo.AddMealToDirectory(happyMeal);
+            _menuRepo.AddMealToDirectory(happyMeal);
 
-            List<Menu> menuList = menuRepo.GetAllMenuItems();
+            List<Menu> menuList = _menuRepo.GetAllMenuItems();
             bool success = menuList.Contains(happyMeal);
 
             Assert.IsTrue(success);
@@ -42,11 +42,11 @@ namespace Menu_Repository_Tests
             ingredients.Add("Hamburger");
 
             Menu happyMeal = new Menu(1, "Happy Meal", "Yummy", ingredients, 4.99);
-            MenuRepo menuRepo = new MenuRepo();
+            MenuRepo _menuRepo = new MenuRepo();
 
-            menuRepo.AddMealToDirectory(happyMeal);
+            _menuRepo.AddMealToDirectory(happyMeal);
 
-            Menu searchResult = menuRepo.GetOneMenuItemByMealNum(1);
+            Menu searchResult = _menuRepo.GetOneMenuItemByMealNum(1);
 
             Assert.AreEqual(happyMeal.MealName, searchResult.MealName);
         }
@@ -57,13 +57,13 @@ namespace Menu_Repository_Tests
             ingredients.Add("Hamburger");
 
             Menu happyMeal = new Menu(1, "Happy Meal", "Yummy", ingredients, 4.99);
-            MenuRepo menuRepo = new MenuRepo();
+            MenuRepo _menuRepo = new MenuRepo();
 
-            menuRepo.AddMealToDirectory(happyMeal);
+            _menuRepo.AddMealToDirectory(happyMeal);
 
-            Menu mealToDelete = menuRepo.GetOneMenuItemByMealNum(1);
+            Menu mealToDelete = _menuRepo.GetOneMenuItemByMealNum(1);
 
-            bool removeResult = menuRepo.DeleteMenutItem(mealToDelete);
+            bool removeResult = _menuRepo.DeleteMenutItem(mealToDelete);
 
             Assert.IsTrue(removeResult);
         }

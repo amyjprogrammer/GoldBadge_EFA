@@ -25,11 +25,11 @@ namespace Claims_Repository_Tests
             DateTime dateOfClaim = new DateTime(2021, 04,28);
             DateTime dateOfIncident = new DateTime(2021, 04, 27);
             Claims newClaim = new Claims(1, ClaimType.Car, "Wreck", 4000, dateOfIncident, dateOfClaim);
-            Claims_Repo repo = new Claims_Repo();
+            Claims_Repo _repo = new Claims_Repo();
 
-            repo.AddNewClaimToDirectory(newClaim);
+            _repo.AddNewClaimToDirectory(newClaim);
 
-            Queue<Claims> claimsList = repo.GetAllClaimsFromDirectory();
+            Queue<Claims> claimsList = _repo.GetAllClaimsFromDirectory();
 
             bool success = claimsList.Contains(newClaim);
 
@@ -41,13 +41,13 @@ namespace Claims_Repository_Tests
             DateTime dateOfClaim = new DateTime(2021, 04, 28);
             DateTime dateOfIncident = new DateTime(2021, 04, 27);
             Claims oldClaim = new Claims(1, ClaimType.Car, "Wreck", 4000, dateOfIncident, dateOfClaim);
-            Claims_Repo repo = new Claims_Repo();
+            Claims_Repo _repo = new Claims_Repo();
 
-            repo.AddNewClaimToDirectory(oldClaim);
+            _repo.AddNewClaimToDirectory(oldClaim);
 
             Claims newClaim = new Claims(1, ClaimType.Car, "Wreck on 465", 4000, dateOfIncident, dateOfClaim);
 
-            bool updateResult = repo.UpdateClaimInDirectory(oldClaim, newClaim);
+            bool updateResult = _repo.UpdateClaimInDirectory(oldClaim, newClaim);
 
             Assert.IsTrue(updateResult);
         }
@@ -57,13 +57,30 @@ namespace Claims_Repository_Tests
             DateTime dateOfClaim = new DateTime(2021, 04, 28);
             DateTime dateOfIncident = new DateTime(2021, 04, 27);
             Claims newClaim = new Claims(1, ClaimType.Car, "Wreck", 4000, dateOfIncident, dateOfClaim);
-            Claims_Repo repo = new Claims_Repo();
+            Claims_Repo _repo = new Claims_Repo();
 
-            repo.AddNewClaimToDirectory(newClaim);
+            _repo.AddNewClaimToDirectory(newClaim);
 
-            Claims searchResult = repo.GetOneClaimFromDirectory(1);
+            Claims searchResult = _repo.GetOneClaimFromDirectory(1);
 
             Assert.AreEqual(newClaim.ClaimAmount, searchResult.ClaimAmount);
         }
+
+       /* [TestMethod]
+        public void DeleteClaimFromDirectory_ShouldReturnCorrectBoolean()
+        {
+            DateTime dateOfClaim = new DateTime(2021, 04, 28);
+            DateTime dateOfIncident = new DateTime(2021, 04, 27);
+            Claims newClaim = new Claims(1, ClaimType.Car, "Wreck", 4000, dateOfIncident, dateOfClaim);
+            Claims_Repo _repo = new Claims_Repo();
+
+            _repo.AddNewClaimToDirectory(newClaim);
+
+            Claims contentToDelete = _repo.GetOneClaimFromDirectory(newClaim.ClaimID);
+
+            bool removeResult = _repo.DeleteClaimFromDirectory(contentToDelete);
+
+            Assert.IsTrue(removeResult);
+        }*/
     }
 }
