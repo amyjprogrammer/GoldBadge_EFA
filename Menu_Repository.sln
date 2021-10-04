@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PlanningFolder", "PlanningFolder", "{3E940119-BEE1-48A9-BB91-BCC44BA3B4F5}"
 	ProjectSection(SolutionItems) = preProject
 		ClaimsPlan.txt = ClaimsPlan.txt
+		InsurancePlan.txt = InsurancePlan.txt
 		MenuPlan.txt = MenuPlan.txt
 	EndProjectSection
 EndProject

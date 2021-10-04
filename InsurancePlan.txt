@@ -1,0 +1,26 @@
+Hint- use a dictionary
+
+1. Badge_Repository - Library
+	a. Badge Class
+		1. BadgeID - int
+		2. DoorNames - list<> (with door numbers)
+	b. Badge_Repo
+		1. AddNewBadgeID()- needs to be a dictionary
+		2. ReadAllBadges()
+		3. ReadOneBadgeByID()
+		4. UpdateBadgeByID()
+		5. DeleteDoorsFromBadge()
+
+2. Badge_Repository_Tests - Tests
+	a. Badge_Repo_Tests
+		1. AddNewBadgeID_ShouldShow
+
+3. Badge_Console - Console App
+	Layout for Menu:
+	Menu
+	Hello Security Admin, What would you like to do?
+
+	1.	Add a badge
+	2.  Edit a badge.
+	3.	List all Badges
+

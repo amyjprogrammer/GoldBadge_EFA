@@ -95,6 +95,7 @@ namespace Menu_Console
 
                 List<string> listOfIngredients = new List<string>();
                 //added the option to add all the Ingredients at once
+                //https://www.delftstack.com/howto/csharp/split-string-to-list-in-csharp/
                 /*bool addIngredients = true;
                 while (addIngredients)
                 {
