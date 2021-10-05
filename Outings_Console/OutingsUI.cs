@@ -22,7 +22,6 @@ namespace Outings_Console
             {
                 Console.Clear();
 
-                //The main menu with options to go to Dev or DevTeam
                 Console.WriteLine
                     (
                         "Welcome to the Komodo Company Outings\n" +
@@ -44,7 +43,7 @@ namespace Outings_Console
                         AddAnOuting();
                         break;
                     case "3":
-                        ;
+                        CostOfOutings();
                         break;
                     case "4":
                         isRunning = false;
@@ -117,7 +116,10 @@ namespace Outings_Console
         }
         private void CostOfOutings()
         {
-            
+            Console.Clear();
+            CostForEachEventType();
+            PauseProgram();
+
         }
         static void PrintColorMessage(ConsoleColor color, string message)
         {
@@ -203,7 +205,7 @@ namespace Outings_Console
         }
         private void DisplayAllOutings()
         {
-            Console.WriteLine("A list of all Outingss\n" +
+            Console.WriteLine("A list of all Outings\n" +
                "******************************************\n");
             List<Outings> listOfAllOutings = _outingsRepo.GetAllOutings();
             if (listOfAllOutings.Count == 0)
@@ -214,12 +216,75 @@ namespace Outings_Console
             {
                 Console.WriteLine($"{"Event Type",-25}{"Attended",-15}{"Date",-15}{"Cost Per Person",-25}{"Cost for Event",-20}");
                 Console.WriteLine($"{"__________",-25}{"________",-15}{"____",-15 }{"_______________",-25}{"______________",-20}");
-                
+
                 foreach (var outingsContent in listOfAllOutings)
                 {
                     Console.WriteLine($"{outingsContent.TypeOfEvent,-25}{outingsContent.NumPeopleAttended,-15}{outingsContent.DateOfEvent.ToShortDateString(),-15}${outingsContent.CostPerPersonForEvent,-25}${outingsContent.CostOfEvent,-20}");
                 }
             }
+        }
+        private string CostForEachEventType()
+        {
+            Console.WriteLine("A list of Costs for Each Event Type\n" +
+               "******************************************\n");
+            List<Outings> listOfAllOutings = _outingsRepo.GetAllOutings();
+
+            if (listOfAllOutings.Count == 0)
+            {
+                Console.WriteLine("Currently we don't have any Outings listed.");
+            }
+            else 
+            {
+                double parkCount = 0;
+                foreach (var outing in listOfAllOutings)
+                {
+                    if (outing.TypeOfEvent == EventType.Amusement_Park)
+                    {
+                        parkCount = parkCount + outing.CostOfEvent;
+                        
+                    }
+                }
+                Console.WriteLine($"The cost for the Amusement Parks Outings was ${parkCount}.");
+
+                double bowlingCount = 0;
+                foreach (var outing in listOfAllOutings)
+                {
+                    if (outing.TypeOfEvent == EventType.Bowling)
+                    {
+                        bowlingCount = bowlingCount + outing.CostOfEvent;
+
+                    }
+                }
+                Console.WriteLine($"\nThe cost for the Bowling Outings was ${bowlingCount}.");
+
+                double concertCount = 0;
+                foreach (var outing in listOfAllOutings)
+                {
+                    if (outing.TypeOfEvent == EventType.Concert)
+                    {
+                        concertCount = concertCount + outing.CostOfEvent;
+
+                    }
+                }
+                Console.WriteLine($"\nThe cost for the Concert Outings was ${concertCount}.");
+
+                double golfCount = 0;
+                foreach (var outing in listOfAllOutings)
+                {
+                    if (outing.TypeOfEvent == EventType.Golf)
+                    {
+                        golfCount = golfCount + outing.CostOfEvent;
+
+                    }
+                }
+                Console.WriteLine($"\nThe cost for the Golf Outings was ${golfCount}.");
+
+                Console.Write("\n*************************************************\n" +
+                    "The total cost for all outings is $");
+                double totalCost = _outingsRepo.TotalCostForOutings();
+                Console.Write(totalCost + ".\n\n");
+            }
+            return "0";
         }
     }
 }
