@@ -38,10 +38,10 @@ namespace Outings_Console
                 switch (userInput)
                 {
                     case "1":
-                        ;
+                        ShowAllOutings();
                         break;
                     case "2":
-                        ;
+                        AddAnOuting();
                         break;
                     case "3":
                         ;
@@ -56,6 +56,64 @@ namespace Outings_Console
                 }
             }
 
+        }
+        private void ShowAllOutings()
+        {
+            Console.Clear();
+            DisplayAllOutings();
+            PauseProgram();
+        }
+        private void AddAnOuting()
+        {
+            bool addOuting = true;
+            while (addOuting)
+            {
+                Console.Clear();
+
+                Outings createOuting = new Outings();
+                Console.WriteLine("Information for the New Outing\n" +
+                    "********************************************\n\n");
+                PrintColorMessage(ConsoleColor.White, "Please select the Event Type Number: \n1. Golf \n2. Bowling \n3. Amusement Park \n4. Concert \n");
+                PrintColorMessage(ConsoleColor.Yellow, "Your selection: ");
+                bool checkUserGaveCorrectType = true;
+                while (checkUserGaveCorrectType)
+                {
+                    int userInputEvent = MakeSureUserEnteredANum();
+                    if (userInputEvent == 1 || userInputEvent == 2 || userInputEvent == 3 || userInputEvent == 4)
+                    {
+                        checkUserGaveCorrectType = false;
+                    }
+                    else
+                    {
+                        PrintColorMessage(ConsoleColor.Red, "The event type must be either 1 for Golf, 2 for Bowling, 3 for Amusement Park or 4 for Concert. \n" +
+                            "Please enter the event type number again: ");
+                    }
+                    createOuting.TypeOfEvent = (EventType)userInputEvent;
+                }
+
+                PrintColorMessage(ConsoleColor.Yellow, "\nPlease enter the number of people attended: ");
+                int userInputAttended = MakeSureUserEnteredANum();
+                createOuting.NumPeopleAttended = userInputAttended;
+
+                PrintColorMessage(ConsoleColor.Yellow, "\nPlease enter the date for the event like 5/21/21: ");
+                string userInputDate = CheckUserInputForDateTime();
+                createOuting.DateOfEvent = DateTime.Parse(userInputDate);
+
+                PrintColorMessage(ConsoleColor.Yellow, "\nPlease enter the total cost for the event: ");
+                double userInputTotalCost = MakeSureUserEnteredADoubleNum();
+                createOuting.CostOfEvent = userInputTotalCost;
+
+                _outingsRepo.AddOutingToDirectory(createOuting);
+                Console.Clear();
+
+                Console.WriteLine("This Outing was added.\n" +
+                    "********************************************\n\n");
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                addOuting = CheckIfUserWantsToAddMore("\nWould you like to add another event? [Y or N]: ");
+                Console.ResetColor();
+            }
+            PauseProgram();
         }
         static void PrintColorMessage(ConsoleColor color, string message)
         {
@@ -125,12 +183,12 @@ namespace Outings_Console
             bool checkUserInputForWrongDate = true;
             while (checkUserInputForWrongDate)
             {
-                string userInputForAccident = Console.ReadLine();
+                string userInput = Console.ReadLine();
                 DateTime dt;
-                var isValidDate = DateTime.TryParse(userInputForAccident, out dt);
+                var isValidDate = DateTime.TryParse(userInput, out dt);
                 if (isValidDate)
                 {
-                    return userInputForAccident;
+                    return userInput;
                 }
                 else
                 {
@@ -139,7 +197,7 @@ namespace Outings_Console
             }
             return "0";
         }
-        private void ShowAllOutings()
+        private void DisplayAllOutings()
         {
             Console.WriteLine("A list of all Outingss\n" +
                "******************************************\n");
@@ -148,21 +206,16 @@ namespace Outings_Console
             {
                 Console.WriteLine("Currently we don't have any Outings listed.");
             }
-            /*else
+            else
             {
-                Console.WriteLine($"{"ClaimID",-10}{"Type",-15}{"Description",-30}{"Amount",-15}{"Date of Accident",-20}{"Date of Claim",-20}{"IsValid",-15}");
-                Console.WriteLine($"{"_______",-10}{"____",-15}{"___________",-30 }{"______",-15}{"________________",-20}{"_____________",-20}{"_______",-15}");
-                foreach (var claimsContent in queueofAllClaims)
-                {
-                    Console.WriteLine($"{claimsContent.ClaimID,-10}{claimsContent.TypeOfClaim,-15}{claimsContent.Description,-30}${claimsContent.ClaimAmount,-15}{claimsContent.DateOfIncident.ToShortDateString(),-20}{claimsContent.DateOfClaim.ToShortDateString(),-20}{claimsContent.IsValid,-15}");
-                }
-                int index = 1;
+                Console.WriteLine($"{"Event Type",-25}{"Attended",-15}{"Date",-15}{"Cost Per Person",-25}{"Cost for Event",-20}");
+                Console.WriteLine($"{"__________",-25}{"________",-15}{"____",-15 }{"_______________",-25}{"______________",-20}");
+                
                 foreach (var outingsContent in listOfAllOutings)
                 {
-                    Console.WriteLine($"{index}. Full name: {devContent.FullName}: Id- {devContent.IdNumber}");
-                    index++;
+                    Console.WriteLine($"{outingsContent.TypeOfEvent,-25}{outingsContent.NumPeopleAttended,-15}{outingsContent.DateOfEvent.ToShortDateString(),-15}${outingsContent.CostPerPersonForEvent,-25}${outingsContent.CostOfEvent,-20}");
                 }
-            }*/
+            }
         }
     }
 }
