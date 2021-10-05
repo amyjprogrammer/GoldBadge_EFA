@@ -35,3 +35,5 @@ Komodo Outings
 
 	b. OutingsUI
 
+Bug- doubles will show full number (issue when finding cost per person)
+

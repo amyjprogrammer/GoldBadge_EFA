@@ -1,14 +1,15 @@
-Email Plan
+Email Problem Plan
 
-**Customers must be shown in alphabetical order
+**Customers must be shown in alphabetical order- find out in UI
 
 1. Email_Repository - Library (Full Crud)
 	a. Customer.cs
 		1. FirstName- string
 		2. LastName = string
 		3. FullName (Combine First and Last Name)
-		4. CustomerType- enum { Current = 1, Past, Potential}
-		5. EmailMessage- set up from what kind of CustomerType
+		4. CustomerID - Int -needs to be unique
+		5. CustomerType- enum { Current = 1, Past, Potential}
+		6. EmailMessage- set up from what kind of CustomerType
 			a. Current- "Thank you for your work with us. We appreciate your loyalty. Here's a coupon."
 			b. Past- "It's been a long time since we've heard from you, we want you back".
 			c. "We currently have the lowest rates on Helicopter Insurance!"
@@ -16,4 +17,39 @@ Email Plan
 	b. Customer_Repo
 		1. AddACustomer()
 		2. ReviewAllCustomers()
-		3. 
+		3. GetOneCustomerByID()
+		4. UpdateCustomerByID()
+			4i. Have a separate menu to allow them to update all or just one piece
+			a. UpdateAllCustomerInfo()
+			b. UpdateCustomerFirstName()
+			c. UpdateCustomerLastName()
+			d. UpdateCustomerID()
+			e. UpdateCustomerType()
+		5. RemoveCustomerByID()
+
+2. Email_Repository_Tests - Tests
+	a. Customer_Tests
+		1. SetFirstName_ShouldReturnCorrectName()- could have option to make sure they enter at least 2 chars
+		2. SetLastName_ShouldReturnCorrectName()
+		3. SetFullName_ShouldReturnCorrectName()
+		4. SetCustomerID_ShouldReturnCorrectValue()
+			a. also test number is unique and an integer
+		5. SetCustomerType_ShouldReturnCorrectType()
+		6. EmailMessage_ShouldReturnCorrectMessageForType()
+
+	b. Customer_Repo_Tests- use [TestInitialize]
+		1. AddACustomer_ShouldReturnGetCorrectBoolean()
+		2. ReviewAllCustomers_ShouldReturnCorrectList()
+		3. GetOneCustomerByID_ShouldReturnCorrectContent()
+		4. UpdateCustomerByID_ShouldReturnTrue()
+			a. UpdateAllCustomerInfo_ShouldReturnTrue()
+			b. UpdateCustomerFirstName_ShouldReturnTrue()
+			c. UpdateCustomerLastName_ShouldReturnTrue()
+			d. UpdateCustomerID_ShouldReturnTrue()
+			e. UpdateCustomerType_ShouldReturnTrue()
+		5. RemoveCustomerByID_ShouldReturnTrue()
+
+3. Email_Console- Console
+	a. Program
+
+	b. EmailUI
