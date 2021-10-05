@@ -107,16 +107,15 @@ namespace Claims_Console
             {
                 Console.Clear();
 
-                //DevTeam Menu
                 Console.WriteLine
                     (
                         "Claims Manager Menu\n" +
                         "**************************************\n\n" +
                         "1. See All Claims\n" +
                         "2. Update a Claim by Claim Number\n" +
-                        /*"3. Remove Claim by Claim Number\n" +*/
                         "3. Enter a New Claim\n" +
-                        "4. Main Menu\n"
+                        "4. Remove all Claims\n" +
+                        "5. Main Menu\n"
                     );
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("\nEnter the number of your selection: ");
@@ -131,13 +130,13 @@ namespace Claims_Console
                     case "2":
                         UpdateClaimUsingClaimID();
                         break;
-                    /*case "3":
-                        DeleteSingleClaim();
-                        break;*/
                     case "3":
                         CreateNewClaim();
                         break;
                     case "4":
+                        DeleteAllClaims();
+                        break;
+                    case "5":
                         isManagerRunning = false;
                         RunMenu(false);
                         break;
@@ -368,7 +367,7 @@ namespace Claims_Console
             }
             PauseProgram();
         }
-       /* private void DeleteSingleClaim()
+        private void DeleteAllClaims()
         {
             bool removeClaim = true;
             while (removeClaim)
@@ -383,42 +382,29 @@ namespace Claims_Console
                 }
                 else
                 {
-                    PrintColorMessage(ConsoleColor.Yellow, "\nEnter the Claim ID you would like to remove: ");
 
-                    int userAnswer = MakeSureUserEnteredANum();
-                    Claims existingClaimInfo = _claimsRepo.GetOneClaimFromDirectory(userAnswer);
-                    if (existingClaimInfo == null)
-                    {
-                        Console.WriteLine("\nWe are not able to find that Claim ID.");
-                        PauseProgram();
-                        return;
-                    }
-
-                    PrintColorMessage(ConsoleColor.Red, $"\nAre you sure you want to delete Claim ID {existingClaimInfo.ClaimID}?\n" +
+                    PrintColorMessage(ConsoleColor.Red, $"\nAre you sure you want to delete ALL THE CLAIMS?\n" +
                         $"Please confirm with Yes or No: ");
                     string userAnswertToDelete = Console.ReadLine().ToLower();
                     if (userAnswertToDelete == "yes")
                     {
                         Console.Clear();
-                        _claimsRepo.DeleteClaimFromDirectory(existingClaimInfo);
-                        Console.WriteLine("This claim was removed.\n" +
+                        _claimsRepo.DeleteAllClaimsFromDirectory();
+                        Console.WriteLine("All Claims were removed.\n" +
                            "*******************************************\n");
-                        Console.WriteLine($"{"ClaimID",-10}{"Type",-15}{"Description",-30}{"Amount",-15}{"Date of Accident",-20}{"Date of Claim",-20}{"IsValid",-15}");
-                        Console.WriteLine($"{"_______",-10}{"____",-15}{"___________",-30 }{"______",-15}{"________________",-20}{"_____________",-20}{"_______",-15}");
-                        Console.WriteLine($"{existingClaimInfo.ClaimID,-10}{existingClaimInfo.TypeOfClaim,-15}{existingClaimInfo.Description,-30}${existingClaimInfo.ClaimAmount,-15}{existingClaimInfo.DateOfIncident.ToShortDateString(),-20}{existingClaimInfo.DateOfClaim.ToShortDateString(),-20}{existingClaimInfo.IsValid,-15}");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"\nClaim ID {existingClaimInfo.ClaimID} was not deleted.");
                         PauseProgram();
                         return;
                     }
-
-                    removeClaim = CheckIfUserWantsToAddMore("Would you like to remove another claim? [Y or N]: ");
+                    else
+                    {
+                        Console.WriteLine($"\nThe Claims were not deleted.");
+                        PauseProgram();
+                        return;
+                    }
                 }
             }
             PauseProgram();
-        }*/
+        }
         static void PrintColorMessage(ConsoleColor color, string message)
         {
             //Change text color

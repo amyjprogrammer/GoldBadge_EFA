@@ -66,8 +66,8 @@ namespace Claims_Repository_Tests
             Assert.AreEqual(newClaim.ClaimAmount, searchResult.ClaimAmount);
         }
 
-       /* [TestMethod]
-        public void DeleteClaimFromDirectory_ShouldReturnCorrectBoolean()
+        [TestMethod]
+        public void DeleteAllClaimsFromDirectory_ShouldReturnCorrectBoolean()
         {
             DateTime dateOfClaim = new DateTime(2021, 04, 28);
             DateTime dateOfIncident = new DateTime(2021, 04, 27);
@@ -76,11 +76,9 @@ namespace Claims_Repository_Tests
 
             _repo.AddNewClaimToDirectory(newClaim);
 
-            Claims contentToDelete = _repo.GetOneClaimFromDirectory(newClaim.ClaimID);
-
-            bool removeResult = _repo.DeleteClaimFromDirectory(contentToDelete);
+            bool removeResult = _repo.DeleteAllClaimsFromDirectory();
 
             Assert.IsTrue(removeResult);
-        }*/
+        }
     }
 }
