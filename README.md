@@ -1,5 +1,5 @@
 
-# Heading Eleven Fifty Academy- Gold Badge Assignment
+# Eleven Fifty Academy- Gold Badge Assignment
 
 _____________________________________________________
 
@@ -25,7 +25,7 @@ The Repository currently holds four different projects with CRUD capabilities.
 
 * Komodo Outings
 	- application to allow accountants to log and display outings within a company
-	-will show a breakdown of the amounts spent per person and for the whole year
+	- will show a breakdown of the amounts spent per person and for the whole year
 
 * Komodo Insurance Badges
 	- application that allows security admins to add badges and door access within the building
