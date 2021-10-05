@@ -8,5 +8,7 @@ namespace Email_Repository
 {
     class Customer_Repo
     {
+        int customerNum = 1;
+
     }
 }

@@ -7,7 +7,7 @@ Email Problem Plan
 		1. FirstName- string
 		2. LastName = string
 		3. FullName (Combine First and Last Name)
-		4. CustomerID - Int -needs to be unique
+		4. CustomerID - Int -needs to be unique (will set for customer)
 		5. CustomerType- enum { Current = 1, Past, Potential}
 		6. EmailMessage- set up from what kind of CustomerType
 			a. Current- "Thank you for your work with us. We appreciate your loyalty. Here's a coupon."
@@ -33,7 +33,7 @@ Email Problem Plan
 		2. SetLastName_ShouldReturnCorrectName()
 		3. SetFullName_ShouldReturnCorrectName()
 		4. SetCustomerID_ShouldReturnCorrectValue()
-			a. also test number is unique and an integer
+			a. also test number is unique and an integer- not in Customer Test- in Customer_Repo
 		5. SetCustomerType_ShouldReturnCorrectType()
 		6. EmailMessage_ShouldReturnCorrectMessageForType()
 

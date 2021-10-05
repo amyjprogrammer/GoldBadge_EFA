@@ -37,5 +37,5 @@ The Repository currently holds four different projects with CRUD capabilities.
 	- allows agents to see all claims and work on the next file in the system
 
 * Komodo Cafe 
-	- application to add, update and review all menu items
+	- application to add, delete and review all menu items
 	- works with lists to store information
