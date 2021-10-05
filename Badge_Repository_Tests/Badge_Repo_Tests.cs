@@ -75,5 +75,13 @@ namespace Badge_Repository_Tests
             bool addResult = _badgeRepo.AddDoorToBadge(_testBadge.BadgeID, addDoor);
             Assert.IsTrue(addResult);
         }
+        [TestMethod]
+        public void RemoveDoorByID_ShoulReturnTrue()
+        {
+            _badgeRepo.AddNewBadgeID(_testBadge);
+
+            bool removeResult = _badgeRepo.RemoveDoorByID(_testBadge.BadgeID);
+            Assert.IsTrue(removeResult);
+        }
     }
 }

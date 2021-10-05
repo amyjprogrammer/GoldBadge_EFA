@@ -1,0 +1,19 @@
+Email Plan
+
+**Customers must be shown in alphabetical order
+
+1. Email_Repository - Library (Full Crud)
+	a. Customer.cs
+		1. FirstName- string
+		2. LastName = string
+		3. FullName (Combine First and Last Name)
+		4. CustomerType- enum { Current = 1, Past, Potential}
+		5. EmailMessage- set up from what kind of CustomerType
+			a. Current- "Thank you for your work with us. We appreciate your loyalty. Here's a coupon."
+			b. Past- "It's been a long time since we've heard from you, we want you back".
+			c. "We currently have the lowest rates on Helicopter Insurance!"
+
+	b. Customer_Repo
+		1. AddACustomer()
+		2. ReviewAllCustomers()
+		3. 

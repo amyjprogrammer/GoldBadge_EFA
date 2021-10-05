@@ -66,5 +66,10 @@ namespace Badge_Repository
             return wasAdded;
 
         }
+        public bool RemoveDoorByID(int badgeID)
+        {
+            bool success = _dictOfBadges.Remove(badgeID);
+            return success;
+        }
     }
 }

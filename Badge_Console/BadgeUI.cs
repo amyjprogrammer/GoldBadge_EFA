@@ -29,7 +29,8 @@ namespace Badge_Console
                         "1. Add a badge\n" +
                         "2. Edit a badge\n" +
                         "3. List all badges\n" +
-                        "4. Exit"
+                        "4. Remove a badge\n" +
+                        "5. Exit"
                     );
                 PrintColorMessage(ConsoleColor.Yellow, "\nPlease enter the number of your selection: ");
                 string userInput = Console.ReadLine();
@@ -46,11 +47,14 @@ namespace Badge_Console
                         ListAllBadges();
                         break;
                     case "4":
+                        RemoveABadge();
+                        break;
+                    case "5":
                         isRunning = false;
                         break;
                     default:
                         Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                        Console.WriteLine("\nPlease enter a valid number between 1-4");
+                        Console.WriteLine("\nPlease enter a valid number between 1-5");
                         Thread.Sleep(2000);
                         Console.ResetColor();
                         break;
@@ -165,6 +169,59 @@ namespace Badge_Console
                 }
             }
             PauseProgram();
+        }
+        private void RemoveABadge()
+        {
+            bool removeBadge = true;
+            while (removeBadge)
+            {
+
+                Console.Clear();
+                ShowAllBadges();
+
+                //double check if any badges listed
+                var allBadges = _badgeRepo.ReadAllBadges();
+                if (allBadges.Count == 0)
+                {
+                    removeBadge = false;
+                }
+                else
+                {
+                    PrintColorMessage(ConsoleColor.Yellow, "\n\nWhat is the badge number you would like to remove: ");
+                    int userInputBadge = MakeSureUserEnteredANum();
+                    var existingBadgeInfo = _badgeRepo.ReadOneBadgeByID(userInputBadge);
+                    if (existingBadgeInfo == null)
+                    {
+                        Console.WriteLine("We are not able to find that badge number.");
+                        PauseProgram();
+                        return;
+                    }
+                    PrintColorMessage(ConsoleColor.Red, $"\nAre you sure you want to remove this badge?\nPlease confirm with Yes or No: ");
+                    string userAnswer = Console.ReadLine().ToLower();
+                    if (userAnswer == "yes")
+                    {
+                        Console.Clear();
+                        _badgeRepo.ReadOneBadgeByID(userInputBadge);
+                        Console.WriteLine("This badge was removed.\n" +
+                            "*******************************************\n");
+                    }
+                    else if (userAnswer == "no")
+                    {
+                        Console.WriteLine($"\nBadge {userInputBadge} was not deleted.");
+                        PauseProgram();
+                        return;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    removeBadge = CheckIfUserWantsToAddMore("\nWould you like to remove another badge? [Y or N]");
+                    Console.ResetColor();
+                }
+            }
+            PauseProgram();
+
         }
         static void PrintColorMessage(ConsoleColor color, string message)
         {
