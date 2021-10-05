@@ -115,6 +115,10 @@ namespace Outings_Console
             }
             PauseProgram();
         }
+        private void CostOfOutings()
+        {
+            
+        }
         static void PrintColorMessage(ConsoleColor color, string message)
         {
             //Change text color

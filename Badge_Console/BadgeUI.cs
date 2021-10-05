@@ -74,7 +74,7 @@ namespace Badge_Console
                 createBadge.BadgeID = userInputBadgeNum;
 
                 List<string> doorAccess = new List<string>();
-                bool addDoors = true;
+                /*bool addDoors = true;
                 while (addDoors)
                 {
                     PrintColorMessage(ConsoleColor.Yellow, "\nList a door that it needs access to: ");
@@ -85,7 +85,13 @@ namespace Badge_Console
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     addDoors = CheckIfUserWantsToAddMore("\nAny other doors? [Y or N]: ");
                     Console.ResetColor();
-                }
+                }*/
+
+                Console.WriteLine("\nPlease enter your list of doors by adding a coma like A5,B1,C9.");
+                PrintColorMessage(ConsoleColor.Yellow, "Door List: ");
+                string splitList = Console.ReadLine();
+                doorAccess = splitList.Split(',').ToList();
+                createBadge.DoorName = doorAccess;
 
                 _badgeRepo.AddNewBadgeID(createBadge);
 
