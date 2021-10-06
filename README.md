@@ -21,7 +21,7 @@ This project utilizes and shows skills with :
 
 ______________________________________________________________________________________________________________
 
-The Repository currently holds four different projects with CRUD capabilities.  
+The Repository currently holds five different projects with CRUD capabilities.  
 
 * Komodo Outings
 	- application to allow accountants to log and display outings within a company
@@ -39,3 +39,7 @@ The Repository currently holds four different projects with CRUD capabilities.
 * Komodo Cafe 
 	- application to add, delete and review all menu items
 	- works with lists to store information
+
+* Komodo Email
+	- application to create, read, update and delete Customer Information
+	- auto generates customer id and by the customer type assigns an email to send

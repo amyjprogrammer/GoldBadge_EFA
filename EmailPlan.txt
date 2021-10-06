@@ -23,7 +23,7 @@ Email Problem Plan
 			a. UpdateAllCustomerInfo()
 			b. UpdateCustomerFirstName()
 			c. UpdateCustomerLastName()
-			d. UpdateCustomerID()
+			d. UpdateCustomerID()- auto generated- will not allow them to update
 			e. UpdateCustomerType()
 		5. RemoveCustomerByID()
 
@@ -45,7 +45,7 @@ Email Problem Plan
 			a. UpdateAllCustomerInfo_ShouldReturnTrue()
 			b. UpdateCustomerFirstName_ShouldReturnTrue()
 			c. UpdateCustomerLastName_ShouldReturnTrue()
-			d. UpdateCustomerID_ShouldReturnTrue()
+			d. UpdateCustomerID_ShouldReturnTrue()- id is automatically generated
 			e. UpdateCustomerType_ShouldReturnTrue()
 		5. RemoveCustomerByID_ShouldReturnTrue()
 
