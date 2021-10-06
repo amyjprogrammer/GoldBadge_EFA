@@ -44,7 +44,7 @@ namespace Email_Console
                         ;
                         break;
                     case "3":
-                        ;
+                        ShowAllCustomers();
                         break;
                     case "4":
                         ;
@@ -110,7 +110,73 @@ namespace Email_Console
             bool editCustomer = true;
             while (editCustomer)
             {
-
+                Console.Clear();
+                DisplayAllCustomers();
+                var allCustomers = _customerRepo.ReviewAllCustomers();
+                if (allCustomers.Count == 0)
+                {
+                    editCustomer = false;
+                }
+                PrintColorMessage(ConsoleColor.Yellow, "\n\nWhat is the customer number to update: ");
+                int userInputCustomer = MakeSureUserEnteredANum();
+                var existingCustomerInfo = _customerRepo.GetOneCustomerByID(userInputCustomer);
+                if (existingCustomerInfo == null)
+                {
+                    Console.WriteLine("We are not able to find that customer number.");
+                    PauseProgram();
+                    return;
+                }
+                Console.WriteLine("\n\nWhat would you like to do?\n\n" +
+                        "1. Update the Full Name and Customer Type\n" +
+                        "2. Update the First Name\n" +
+                        "3. Update the Last Name\n" +
+                        "4. Update the Customer Type\n");
+                PrintColorMessage(ConsoleColor.Yellow, "Select Option: ");
+                string userChoice = Console.ReadLine();
+                switch (userChoice)
+                {
+                    case "1":
+                        ;
+                        break;
+                    case "2":
+                        ;
+                        break;
+                    case "3":
+                        ;
+                        break;
+                    case "4":
+                        ;
+                        break;
+                    default:
+                        PrintColorMessage(ConsoleColor.Magenta, "Please enter between 1-4.");
+                        Thread.Sleep(2000);
+                        break;
+                }
+            }
+            PauseProgram();
+        }
+        public void ShowAllCustomers()
+        {
+            Console.Clear();
+            DisplayAllCustomers();
+            PauseProgram();
+        }
+        private void DisplayAllCustomers()
+        {
+            Console.WriteLine("A list of all Customers\n" +
+              "******************************************\n");
+            var allCustomers = _customerRepo.ReviewAllCustomers();
+            if (allCustomers.Count == 0)
+            {
+                Console.WriteLine("Currently we don't have any badges listed.");
+            }
+            else
+            {
+                Console.WriteLine($"{"Customer ID",-15}{"First Name",-20}{"Last Name", -20}{"Type", -15}{"Email", -35}");
+                foreach (var customer in allCustomers)
+                {
+                    Console.WriteLine($"{customer.CustomerID, -15}{customer.FirstName, -20}{customer.LastName, -20}{customer.TypeOfCustomer, -15}{customer.EmailMessage,-35}");
+                }
             }
         }
         static void PrintColorMessage(ConsoleColor color, string message)
@@ -157,6 +223,13 @@ namespace Email_Console
                 }
             }
             return 0;
+        }
+        private void DisplayOneCustomerByID(int customerID)
+        {
+            Console.WriteLine("Customer Information\n" +
+             "******************************************\n");
+            var oneCustomer = _customerRepo.GetOneCustomerByID(customerID);
+
         }
     }
 }
