@@ -201,7 +201,7 @@ namespace Badge_Console
                     if (userAnswer == "yes")
                     {
                         Console.Clear();
-                        _badgeRepo.ReadOneBadgeByID(userInputBadge);
+                        _badgeRepo.RemoveDoorByID(userInputBadge);
                         Console.WriteLine("This badge was removed.\n" +
                             "*******************************************\n");
                     }
@@ -315,5 +315,6 @@ namespace Badge_Console
                 Console.Write($"{door} ");
             }
         }
+       
     }
 }

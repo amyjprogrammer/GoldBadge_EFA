@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Email_Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace Email_Console
 {
     public class EmailUI
     {
+        private Customer_Repo _customerRepo = new Customer_Repo();
         public void Run()
         {
             RunMenu();
@@ -36,7 +38,7 @@ namespace Email_Console
                 switch (userInput)
                 {
                     case "1":
-                        ;
+                        AddACustomer();
                         break;
                     case "2":
                         ;
@@ -64,9 +66,52 @@ namespace Email_Console
             bool addCustomer = true;
             while (addCustomer)
             {
+                Console.Clear();
 
+                Customer newCustomer = new Customer();
+                Console.WriteLine("Information for the New Customer\n" +
+                    "********************************************\n\n");
+
+                PrintColorMessage(ConsoleColor.Yellow, "Please enter the first name: ");
+                newCustomer.FirstName = Console.ReadLine();
+
+                PrintColorMessage(ConsoleColor.Yellow, "\nPlease enter the last name: ");
+                newCustomer.LastName = Console.ReadLine();
+
+                PrintColorMessage(ConsoleColor.Yellow, "\nEnter the type of customer: 1. Current, 2. Past, 3. Potential: ");
+                bool checkUserGaveCorrectType = true;
+                while (checkUserGaveCorrectType)
+                {
+                    int userInputType = MakeSureUserEnteredANum();
+                    if (userInputType == 1 || userInputType == 2 || userInputType == 3)
+                    {
+                        checkUserGaveCorrectType = false;
+                    }
+                    else
+                    {
+                        PrintColorMessage(ConsoleColor.Red, "The customer type must be either 1 for Current,2 for Past or 3 for Potential. \n" +
+                            "Please enter the claim type number again: ");
+                    }
+                    newCustomer.TypeOfCustomer = (CustomerType)userInputType;
+                }
+                _customerRepo.AddACustomer(newCustomer);
+                Console.Clear();
+                Console.WriteLine("The Customer was Added\n" +
+                   "********************************************\n\n");
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                addCustomer = CheckIfUserWantsToAddMore("\nWould you like to add another customer? [Y or N]: ");
+                Console.ResetColor();
             }
             PauseProgram();
+        }
+        private void EditACustomer()
+        {
+            bool editCustomer = true;
+            while (editCustomer)
+            {
+
+            }
         }
         static void PrintColorMessage(ConsoleColor color, string message)
         {
@@ -94,6 +139,24 @@ namespace Email_Console
         {
             Console.WriteLine("\n\nPress any key to return to Main Menu...");
             Console.ReadKey();
+        }
+        private int MakeSureUserEnteredANum()
+        {
+            bool checkUserGaveWrongNum = true;
+            while (checkUserGaveWrongNum)
+            {
+                string stringInput = Console.ReadLine();
+                if (!int.TryParse(stringInput, out int uniqueId))
+                {
+                    PrintColorMessage(ConsoleColor.Cyan, "Please enter a number: ");
+                    continue;
+                }
+                else
+                {
+                    return Int32.Parse(stringInput);
+                }
+            }
+            return 0;
         }
     }
 }
