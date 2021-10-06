@@ -59,6 +59,15 @@ namespace Email_Console
                 }
             }
         }
+        private void AddACustomer()
+        {
+            bool addCustomer = true;
+            while (addCustomer)
+            {
+
+            }
+            PauseProgram();
+        }
         static void PrintColorMessage(ConsoleColor color, string message)
         {
             //Change text color
