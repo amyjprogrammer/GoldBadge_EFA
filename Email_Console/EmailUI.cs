@@ -47,7 +47,7 @@ namespace Email_Console
                         ShowAllCustomers();
                         break;
                     case "4":
-                        ;
+                        RemoveACustomer();
                         break;
                     case "5":
                         isRunning = false;
@@ -184,6 +184,55 @@ namespace Email_Console
         {
             Console.Clear();
             DisplayAllCustomers();
+            PauseProgram();
+        }
+        private void RemoveACustomer()
+        {
+            bool removeCustomer = true;
+            while (removeCustomer)
+            {
+                Console.Clear();
+                DisplayAllCustomers();
+                var allCustomers = _customerRepo.ReviewAllCustomers();
+                if (allCustomers.Count == 0)
+                {
+                    removeCustomer = false;
+                }
+                else
+                {
+                    PrintColorMessage(ConsoleColor.Yellow, "\n\nWhat is the customer number to remove: ");
+                    int userInputCustomer = MakeSureUserEnteredANum();
+                    var existingCustomerInfo = _customerRepo.GetOneCustomerByID(userInputCustomer);
+                    if (existingCustomerInfo == null)
+                    {
+                        Console.WriteLine("We are not able to find that customer number.");
+                        PauseProgram();
+                        return;
+                    }
+                    PrintColorMessage(ConsoleColor.Red, $"\nAre you sure you want to remove customer {existingCustomerInfo.CustomerID}?\nPlease confirm with Yes or No: ");
+                    string userAnswer = Console.ReadLine().ToLower();
+                    if (userAnswer == "yes")
+                    {
+                        Console.Clear();
+                        _customerRepo.RemoveCustomerByID(existingCustomerInfo);
+                        Console.WriteLine("This customer was removed.\n" +
+                            "*******************************************\n");
+                    }
+                    else if (userAnswer == "no")
+                    {
+                        Console.WriteLine($"\nCustomer {existingCustomerInfo.CustomerID} was not deleted.");
+                        PauseProgram();
+                        return;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    removeCustomer = CheckIfUserWantsToAddMore("\nWould you like to remove another customer? [Y or N]: ");
+                    Console.ResetColor();
+                }
+            }
             PauseProgram();
         }
         private void DisplayAllCustomers()
