@@ -1,6 +1,6 @@
 Email Problem Plan
 
-**Customers must be shown in alphabetical order- find out in UI
+**Customers must be shown in alphabetical order- find out in UI- didn't get to
 
 1. Email_Repository - Library (Full Crud)
 	a. Customer.cs
