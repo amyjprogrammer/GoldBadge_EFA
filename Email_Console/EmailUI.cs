@@ -41,7 +41,7 @@ namespace Email_Console
                         AddACustomer();
                         break;
                     case "2":
-                        ;
+                        EditACustomer();
                         break;
                     case "3":
                         ShowAllCustomers();
@@ -117,40 +117,65 @@ namespace Email_Console
                 {
                     editCustomer = false;
                 }
-                PrintColorMessage(ConsoleColor.Yellow, "\n\nWhat is the customer number to update: ");
-                int userInputCustomer = MakeSureUserEnteredANum();
-                var existingCustomerInfo = _customerRepo.GetOneCustomerByID(userInputCustomer);
-                if (existingCustomerInfo == null)
+                else
                 {
-                    Console.WriteLine("We are not able to find that customer number.");
-                    PauseProgram();
-                    return;
-                }
-                Console.WriteLine("\n\nWhat would you like to do?\n\n" +
-                        "1. Update the Full Name and Customer Type\n" +
-                        "2. Update the First Name\n" +
-                        "3. Update the Last Name\n" +
-                        "4. Update the Customer Type\n");
-                PrintColorMessage(ConsoleColor.Yellow, "Select Option: ");
-                string userChoice = Console.ReadLine();
-                switch (userChoice)
-                {
-                    case "1":
-                        ;
-                        break;
-                    case "2":
-                        ;
-                        break;
-                    case "3":
-                        ;
-                        break;
-                    case "4":
-                        ;
-                        break;
-                    default:
-                        PrintColorMessage(ConsoleColor.Magenta, "Please enter between 1-4.");
-                        Thread.Sleep(2000);
-                        break;
+                    PrintColorMessage(ConsoleColor.Yellow, "\n\nWhat is the customer number to update: ");
+                    int userInputCustomer = MakeSureUserEnteredANum();
+                    var existingCustomerInfo = _customerRepo.GetOneCustomerByID(userInputCustomer);
+                    if (existingCustomerInfo == null)
+                    {
+                        Console.WriteLine("We are not able to find that customer number.");
+                        PauseProgram();
+                        return;
+                    }
+                    Console.Clear();
+                    DisplayOneCustomerByID(userInputCustomer);
+                    Console.WriteLine("\n\nWhat would you like to do?\n\n" +
+                            "1. Update the Full Name and Customer Type\n" +
+                            "2. Update the First Name\n" +
+                            "3. Update the Last Name\n" +
+                            "4. Update the Customer Type\n");
+                    PrintColorMessage(ConsoleColor.Yellow, "Select Option: ");
+                    string userChoice = Console.ReadLine();
+                    Customer updateCustomerInfo = new Customer();
+                    switch (userChoice)
+                    {
+                        case "1":
+                            var newInfo = UpdateAllInfo(updateCustomerInfo);
+                            newInfo.CustomerID = existingCustomerInfo.CustomerID;
+                            _customerRepo.UpdateAllCustomerInfo(existingCustomerInfo, newInfo);
+                            Console.Clear();
+                            DisplayOneCustomerByID(newInfo.CustomerID);
+                            break;
+                        case "2":
+                            var newFirstName = UpdateFirstName(updateCustomerInfo);
+                            newFirstName.CustomerID = existingCustomerInfo.CustomerID;
+                            _customerRepo.UpdateCustomerFirstName(existingCustomerInfo, newFirstName.FirstName);
+                            Console.Clear();
+                            DisplayOneCustomerByID(newFirstName.CustomerID);
+                            break;
+                        case "3":
+                            var newLastName = UpdateLastName(updateCustomerInfo);
+                            newLastName.CustomerID = existingCustomerInfo.CustomerID;
+                            _customerRepo.UpdateCustomerLastName(existingCustomerInfo, newLastName.LastName);
+                            Console.Clear();
+                            DisplayOneCustomerByID(newLastName.CustomerID);
+                            break;
+                        case "4":
+                            var newType = UpdateType(updateCustomerInfo);
+                            newType.CustomerID = existingCustomerInfo.CustomerID;
+                            _customerRepo.UpdateCustomerType(existingCustomerInfo, newType.TypeOfCustomer);
+                            Console.Clear();
+                            DisplayOneCustomerByID(newType.CustomerID);
+                            break;
+                        default:
+                            PrintColorMessage(ConsoleColor.Magenta, "Please enter between 1-4.");
+                            Thread.Sleep(2000);
+                            break;
+                    }
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    editCustomer = CheckIfUserWantsToAddMore("\nWould you like to add update another customer? [Y or N]: ");
+                    Console.ResetColor();
                 }
             }
             PauseProgram();
@@ -172,12 +197,71 @@ namespace Email_Console
             }
             else
             {
-                Console.WriteLine($"{"Customer ID",-15}{"First Name",-20}{"Last Name", -20}{"Type", -15}{"Email", -35}");
+                Console.WriteLine($"{"Customer ID",-15}{"First Name",-15}{"Last Name",-15}{"Type",-15}{"Email",-35}");
                 foreach (var customer in allCustomers)
                 {
-                    Console.WriteLine($"{customer.CustomerID, -15}{customer.FirstName, -20}{customer.LastName, -20}{customer.TypeOfCustomer, -15}{customer.EmailMessage,-35}");
+                    Console.WriteLine($"{customer.CustomerID,-15}{customer.FirstName,-15}{customer.LastName,-15}{customer.TypeOfCustomer,-15}{customer.EmailMessage,-35}");
                 }
             }
+        }
+        private Customer UpdateAllInfo(Customer newCustomerInfo)
+        {
+            PrintColorMessage(ConsoleColor.Yellow, "\nWhat is the new First Name: ");
+            newCustomerInfo.FirstName = Console.ReadLine();
+
+            PrintColorMessage(ConsoleColor.Yellow, "\nWhat is the new Last Name: ");
+            newCustomerInfo.LastName = Console.ReadLine();
+
+            PrintColorMessage(ConsoleColor.Yellow, "\nEnter the new type of customer: 1. Current, 2. Past, 3. Potential: ");
+            bool checkUserGaveCorrectType = true;
+            while (checkUserGaveCorrectType)
+            {
+                int userInputType = MakeSureUserEnteredANum();
+                if (userInputType == 1 || userInputType == 2 || userInputType == 3)
+                {
+                    checkUserGaveCorrectType = false;
+                }
+                else
+                {
+                    PrintColorMessage(ConsoleColor.Red, "The customer type must be either 1 for Current,2 for Past or 3 for Potential. \n" +
+                        "Please enter the claim type number again: ");
+                }
+                newCustomerInfo.TypeOfCustomer = (CustomerType)userInputType;
+            }
+            return newCustomerInfo;
+        }
+        private Customer UpdateFirstName(Customer newCustomerInfo)
+        {
+            PrintColorMessage(ConsoleColor.Yellow, "\nWhat is the new First Name: ");
+            newCustomerInfo.FirstName = Console.ReadLine();
+            return newCustomerInfo;
+        }
+        private Customer UpdateLastName(Customer newCustomerInfo)
+        {
+
+            PrintColorMessage(ConsoleColor.Yellow, "\nWhat is the new Last Name: ");
+            newCustomerInfo.LastName = Console.ReadLine();
+            return newCustomerInfo;
+        }
+        private Customer UpdateType(Customer newCustomerInfo)
+        {
+            PrintColorMessage(ConsoleColor.Yellow, "\nEnter the new type of customer: 1. Current, 2. Past, 3. Potential: ");
+            bool checkUserGaveCorrectType = true;
+            while (checkUserGaveCorrectType)
+            {
+                int userInputType = MakeSureUserEnteredANum();
+                if (userInputType == 1 || userInputType == 2 || userInputType == 3)
+                {
+                    checkUserGaveCorrectType = false;
+                }
+                else
+                {
+                    PrintColorMessage(ConsoleColor.Red, "The customer type must be either 1 for Current,2 for Past or 3 for Potential. \n" +
+                        "Please enter the claim type number again: ");
+                }
+                newCustomerInfo.TypeOfCustomer = (CustomerType)userInputType;
+            }
+            return newCustomerInfo;
         }
         static void PrintColorMessage(ConsoleColor color, string message)
         {
@@ -229,6 +313,8 @@ namespace Email_Console
             Console.WriteLine("Customer Information\n" +
              "******************************************\n");
             var oneCustomer = _customerRepo.GetOneCustomerByID(customerID);
+            Console.WriteLine($"{"Customer ID",-15}{"First Name",-20}{"Last Name",-20}{"Type",-15}{"Email",-35}");
+            Console.WriteLine($"{oneCustomer.CustomerID,-15}{oneCustomer.FirstName,-20}{oneCustomer.LastName,-20}{oneCustomer.TypeOfCustomer,-15}{oneCustomer.EmailMessage,-35}");
 
         }
     }
